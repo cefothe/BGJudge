@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BgjudgeApplication {
+public class BGJudgeApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BgjudgeApplication.class, args);
+		SpringApplication.run(BGJudgeApplication.class, args);
 	}
 }
