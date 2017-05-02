@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,12 +40,13 @@ public class User extends BaseEntity implements UserDetails {
     private boolean isEnabled;
 
     @Getter
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> authorities = new HashSet<>();
 
-    public User(String username, String password, UserInformation userInformation) {
+    public User(String username, String password, UserInformation userInformation, Role role) {
         this.username = username;
         this.password = password;
         this.userInformation = userInformation;
+        this.authorities.add(role);
     }
 }
