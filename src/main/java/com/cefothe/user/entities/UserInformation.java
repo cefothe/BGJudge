@@ -2,6 +2,7 @@ package com.cefothe.user.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 
@@ -10,6 +11,7 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserInformation {
 
     @Getter

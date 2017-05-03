@@ -20,7 +20,7 @@ public class RoleServiceBean implements RoleService {
 
     @Override
     public Role findByAuthority(String authority) {
-        if(authority == null){
+        if(authority == null || authority.isEmpty()){
             authority = "STUDENT";
         }
         Role role = this.roleRepository.findByAuthority(authority);

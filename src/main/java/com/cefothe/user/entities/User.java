@@ -28,18 +28,6 @@ public class User extends BaseEntity implements UserDetails {
     private UserInformation userInformation;
 
     @Getter
-    private boolean isAccountNonExpired;
-
-    @Getter
-    private boolean isAccountNonLocked;
-
-    @Getter
-    private boolean isCredentialsNonExpired;
-
-    @Getter
-    private boolean isEnabled;
-
-    @Getter
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> authorities = new HashSet<>();
 
@@ -48,5 +36,29 @@ public class User extends BaseEntity implements UserDetails {
         this.password = password;
         this.userInformation = userInformation;
         this.authorities.add(role);
+    }
+
+    @Transient
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Transient
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Transient
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Transient
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
