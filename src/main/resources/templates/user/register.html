@@ -3,10 +3,40 @@
 <main class="col-4 offset-4 text-center">
     <div class="container">
         <div class="row">
-            <div class="col-12">
+            <div class="col-8 center-block">
                 <div class="text-center"><h1 class="display-3">Register</h1></div>
                 <br/>
                 <form th:action="@{/register}" method="post" th:object="${userRegistrationModel}" id="form">
+
+                    <div class="form-group row" th:classappend="${#fields.hasErrors('firstName') ? 'has-danger' : _}">
+                        <label th:for="*{firstName}" class="sr-only">Full Name</label>
+                        <input type="text" th:field="*{firstName}" pattern="^[a-zA-Z -.]+$" class="form-control"
+                               th:classappend="${#fields.hasErrors('firstName') ? 'form-control-danger' : _}"
+                               placeholder="First name"/>
+                        <div class="form-control-feedback" th:each="error : ${#fields.errors('firstName')}"
+                             th:text="${error}">Error Message
+                        </div>
+                    </div>
+
+                    <div class="form-group row" th:classappend="${#fields.hasErrors('lastName') ? 'has-danger' : _}">
+                        <label th:for="*{lastName}" class="sr-only">Full Name</label>
+                        <input type="text" th:field="*{lastName}" pattern="^[a-zA-Z -.]+$" class="form-control"
+                               th:classappend="${#fields.hasErrors('lastName') ? 'form-control-danger' : _}"
+                               placeholder="Last name"/>
+                        <div class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}"
+                             th:text="${error}">Error Message
+                        </div>
+                    </div>
+
+                    <div class="form-group row" th:classappend="${#fields.hasErrors('username') ? 'has-danger' : _}">
+                        <label th:for="*{username}" class="sr-only">Username</label>
+                        <input type="text" th:field="*{username}" pattern="^[a-zA-Z -.]+$" class="form-control"
+                               th:classappend="${#fields.hasErrors('username') ? 'form-control-danger' : _}"
+                               placeholder="User name"/>
+                        <div class="form-control-feedback" th:each="error : ${#fields.errors('username')}"
+                             th:text="${error}">Error Message
+                        </div>
+                    </div>
 
                     <div class="form-group row" th:classappend="${#fields.hasErrors('email') ? 'has-danger' : _}">
                         <label th:for="*{email}" class="sr-only">Email</label>
@@ -17,16 +47,6 @@
                              th:text="${error}">Error Message
                         </div>
                     </div>
-
-                    <!--<div class="form-group row" th:classappend="${#fields.hasErrors('fullName') ? 'has-danger' : _}">-->
-                        <!--<label th:for="*{fullName}" class="sr-only">Full Name</label>-->
-                        <!--<input type="text" th:field="*{fullName}" pattern="^[a-zA-Z -.]+$" class="form-control"-->
-                               <!--th:classappend="${#fields.hasErrors('fullName') ? 'form-control-danger' : _}"-->
-                               <!--placeholder="Full Name"/>-->
-                        <!--<div class="form-control-feedback" th:each="error : ${#fields.errors('fullName')}"-->
-                             <!--th:text="${error}">Error Message-->
-                        <!--</div>-->
-                    <!--</div>-->
 
                     <div class="form-group row" th:classappend="${#fields.hasErrors('password') ? 'has-danger' : _}">
                         <label th:for="*{password}" class="sr-only">Password</label>
