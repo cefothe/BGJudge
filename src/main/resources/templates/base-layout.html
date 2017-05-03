@@ -7,7 +7,7 @@
 <!--<script th:src="@{/js/jquery-3.1.1.min.js}"></script>-->
 <!--<header th:replace="~{fragments/header :: header}"></header>-->
 <span th:text="${view}"></span>
-<main id="content" th:replace="~{/user/login :: main}"></main>
+<main id="content" th:replace="~{${view} :: main}"></main>
 
 <!--<footer th:replace="~{fragments/footer :: footer}"></footer>-->
 

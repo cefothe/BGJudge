@@ -33,7 +33,7 @@ public class UserController {
         model.addAttribute("view", "user/login");
         model.addAttribute("user", new LoginUserModel());
 
-        return "user/login";
+        return "base-layout";
     }
 
     @GetMapping("/register")
@@ -45,7 +45,7 @@ public class UserController {
             model.addAttribute("userRegistrationModel", new RegisterUserModel());
         }
 
-        return "user/register";
+        return "base-layout";
     }
 
     @PostMapping("/register")

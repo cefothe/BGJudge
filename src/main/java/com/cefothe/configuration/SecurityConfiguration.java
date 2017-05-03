@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .formLogin().loginPage("/login").permitAll()
                     .usernameParameter("username")
-                    .passwordParameter("password").successForwardUrl("/")
+                    .passwordParameter("password")
                 .and()
                     .rememberMe()
                     .rememberMeCookieName("RememberMe")
