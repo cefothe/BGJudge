@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -32,7 +33,7 @@ public class UserController {
         model.addAttribute("view", "user/login");
         model.addAttribute("user", new LoginUserModel());
 
-        return "base-layout";
+        return "user/login";
     }
 
     @GetMapping("/register")
@@ -44,7 +45,7 @@ public class UserController {
             model.addAttribute("userRegistrationModel", new RegisterUserModel());
         }
 
-        return "base-layout";
+        return "user/register";
     }
 
     @PostMapping("/register")
@@ -59,5 +60,11 @@ public class UserController {
 
         return "redirect:/login";
 
+    }
+
+    @ResponseBody
+    @GetMapping("/user/test")
+    public String test(){
+        return "test";
     }
 }

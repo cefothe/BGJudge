@@ -36,7 +36,7 @@ public class UserServiceBean implements UserService {
         if(user == null){
             throw new UsernameNotFoundException("Invalidate credential");
         }
-        return null;
+        return user ;
     }
 
     @Override
