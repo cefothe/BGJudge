@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .key("SecretKey")
                     .tokenValiditySeconds(100000)
                 .and()
-                    .logout().logoutSuccessUrl("/login?logout").permitAll()
+                    .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()
                 .and()
                     .csrf().disable();
     }

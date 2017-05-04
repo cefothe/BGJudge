@@ -22,12 +22,39 @@
                     <li>
                         <a th:href="@{/feedback}">FeedBack</a>
                     </li>
+                    <th:block sec:authorize="hasAuthority('TEACHER')">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false">Teacher<span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="download">
+                                <li><a th:href="@{/exam/create}">Create Exam</a></li>
+                                <li><a th:href="@{/exam/all}">Show all exams</a></li>
+                            </ul>
+                        </li>
+                    </th:block>
+                    <th:block sec:authorize="hasAuthority('ADMIN')">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false">Admin<span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="download">
+                                <li><a th:href="@{/news/all}">Show all news</a></li>
+                                <li><a th:href="@{/news/create}">Create news</a></li>
+                                <li><a th:href="@{/user/all}">All users</a></li>
+                            </ul>
+                        </li>
+                    </th:block>
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a th:href="@{/login}" >Login</a></li>
-                    <li><a th:href="@{/register}">Registration</a></li>
-                </ul>
+                <th:block sec:authorize="isAnonymous()">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{/login}" >Login</a></li>
+                        <li><a th:href="@{/register}">Registration</a></li>
+                    </ul>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{/user/profile}" th:text="${#authentication.getPrincipal().getUsername()}"></a></li>
+                        <li><a th:href="@{/logout}" class="nav-link" id="btn-logout">Logout</a></li>
+                    </ul>
+                </th:block>
 
             </div>
         </div>
