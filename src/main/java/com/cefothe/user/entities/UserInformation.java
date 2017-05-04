@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 /**
  * Created by cefothe on 02.05.17.
@@ -12,7 +13,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInformation {
+public class UserInformation implements Serializable {
 
     @Getter
     private String firstName;
