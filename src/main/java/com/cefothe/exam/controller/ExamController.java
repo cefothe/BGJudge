@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @PreAuthorize("hasAuthority('TEACHER')")
 public class ExamController {
 
-    private ExamService examService;
+    private final ExamService examService;
 
     @Autowired
     public ExamController(ExamService examService) {
@@ -40,8 +40,16 @@ public class ExamController {
     @PostMapping("create")
     public String createExam(CreateExamModel createExamModel, BindingResult bindingResult, RedirectAttributes redirectAttributes){
         examService.create(createExamModel);
+        return "redirect:/exam/all";
+    }
 
-        return "redirect:/login";
+    @GetMapping("all")
+    public String allExams(Model model){
+        model.addAttribute("title", "View all exams");
+        model.addAttribute("view", "exam/all");
+        model.addAttribute("exams", examService.getAllExams());
+
+        return "base-layout";
     }
 
 }

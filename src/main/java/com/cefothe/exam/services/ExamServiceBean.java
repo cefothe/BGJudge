@@ -3,12 +3,16 @@ package com.cefothe.exam.services;
 import com.cefothe.common.component.AuthenticationFacade;
 import com.cefothe.exam.entitities.Examens;
 import com.cefothe.exam.models.binding.CreateExamModel;
+import com.cefothe.exam.models.view.ViewExamModel;
 import com.cefothe.exam.repositories.ExamRepository;
 import com.cefothe.user.entities.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cefothe on 04.05.17.
@@ -30,9 +34,9 @@ public class ExamServiceBean implements ExamService {
 
     @Override
     public void create(CreateExamModel createExamModel) {
-        Examens examens = modelMapper.map(createExamModel,Examens.class);
-        examens.setCreatedBy(authenticationFacade.getUser());
-        examRepository.save(examens);
+        Examens examens = this.modelMapper.map(createExamModel,Examens.class);
+        examens.setCreatedBy(this.authenticationFacade.getUser());
+        this.examRepository.save(examens);
     }
 
     @Override
@@ -43,5 +47,12 @@ public class ExamServiceBean implements ExamService {
     @Override
     public void delete(Long id) {
 
+    }
+
+    @Override
+    public List<ViewExamModel> getAllExams() {
+        List<ViewExamModel> viewExamModels = new ArrayList<>();
+        examRepository.findAll().forEach(examens -> viewExamModels.add(this.modelMapper.map(examens,ViewExamModel.class)));
+        return viewExamModels;
     }
 }
