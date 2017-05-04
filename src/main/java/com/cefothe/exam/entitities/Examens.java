@@ -5,8 +5,10 @@ import com.cefothe.tasks.entities.Task;
 import com.cefothe.user.entities.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +22,16 @@ import java.util.List;
 public class Examens  extends BaseEntity{
 
     @Getter
+    @Setter
     private String name;
 
     @Getter
+    @Setter
     @Column(name = "exam_date", nullable = false)
-    private LocalDateTime examDate;
+    private Timestamp examDate;
 
     @Getter
+    @Setter
     @Column(name = "exam_lenght", nullable = false)
     private long examLength;
 
@@ -34,15 +39,22 @@ public class Examens  extends BaseEntity{
     @Getter
     private List<Task> tasks = new ArrayList<>();
 
-    @OneToOne
     @Getter
-    private User user;
+    @Setter
+    @OneToOne(optional = false)
+    private User createdBy;
 
-    public Examens(String name, LocalDateTime examDate, long examLength, User user) {
+    @Enumerated(EnumType.STRING)
+    @Getter
+    @Setter
+    private ExamStatus examStatus = ExamStatus.IN_PROGRESS;
+
+    public Examens(String name, Timestamp examDate, long examLength, User createdBy) {
         this.name = name;
         this.examDate = examDate;
         this.examLength = examLength;
-        this.user = user;
+        this.createdBy = createdBy;
+        this.examStatus = ExamStatus.IN_PROGRESS;
     }
 
     public void addTask(Task task){
