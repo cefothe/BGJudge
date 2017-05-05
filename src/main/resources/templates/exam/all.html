@@ -13,10 +13,11 @@
                         <thead>
                         <tr>
                             <th>Id</th>
-                            <th>Exam name</th>
+                            <th>Exam titile</th>
                             <th>exam length</th>
                             <th>Exam date</th>
                             <th>Exam status</th>
+                            <th>Open exam</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -26,6 +27,7 @@
                                     <td th:text="${exam.examLength}"></td>
                                     <td th:text="${exam.examDate}"></td>
                                     <td th:text="${exam.examStatus}"></td>
+                                    <td><a th:href="${'/exam/open/'+{exam.id}}">Open</a></td>
                                 </tr>
                         </tbody>
                     </table>

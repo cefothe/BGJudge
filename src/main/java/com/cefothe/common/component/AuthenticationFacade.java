@@ -1,6 +1,6 @@
 package com.cefothe.common.component;
 
-import com.cefothe.user.entities.User;
+import com.cefothe.bgjudge.user.entities.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
