@@ -1,9 +1,10 @@
 package com.cefothe.configuration;
 
-import com.cefothe.user.service.UserService;
+import com.cefothe.bgjudge.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -22,12 +24,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public SecurityConfiguration(BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userService = userService;
-    }
-
-    public SecurityConfiguration(boolean disableDefaults, BCryptPasswordEncoder bCryptPasswordEncoder, UserService userService) {
-        super(disableDefaults);
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userService = userService;
     }
@@ -41,7 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/register", "/bootstrap/**", "/jquery/**").permitAll()
+                    .antMatchers("/", "/register", "/css/**", "/js/**").permitAll()
                     .anyRequest().authenticated()
                 .and()
                     .formLogin().loginPage("/login").permitAll()
@@ -54,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .key("SecretKey")
                     .tokenValiditySeconds(100000)
                 .and()
-                    .logout().logoutSuccessUrl("/login?logout").permitAll()
+                    .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()
                 .and()
                     .csrf().disable();
     }
