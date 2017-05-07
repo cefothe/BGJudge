@@ -2,6 +2,7 @@ package com.cefothe.bgjudge.workers.compilers;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -11,9 +12,9 @@ import java.io.InputStreamReader;
 public class JavaCompiler implements  Compiler {
 
     @Override
-    public void compile(String directory, String className) throws IOException {
+    public void compile(File file) throws IOException {
 
-        Process process = new ProcessBuilder("javac",directory+className)
+        Process process = new ProcessBuilder("javac", file.getAbsolutePath())
                 .redirectErrorStream(false)
                 .start();
 

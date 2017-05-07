@@ -9,14 +9,14 @@ import java.util.List;
 public class JavaExecutor implements  Executor {
 
     @Override
-    public List<String> execute(String directory, String classNam, List<String> params) throws IOException {
+    public List<String> execute(File file, List<String> params) throws IOException {
 
         Process process =
-                new ProcessBuilder("java","-cp",directory,classNam)
-                        .redirectErrorStream(true)
+                new ProcessBuilder("java","-cp",file.getAbsolutePath())
+                        .redirectErrorStream(false)
                         .start();
 
-        ArrayList<String> output = new ArrayList<String>();
+        ArrayList<String> output = new ArrayList<>();
         BufferedReader br = new BufferedReader(
                 new InputStreamReader(process.getInputStream()));
         String line = null;
