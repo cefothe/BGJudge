@@ -25,6 +25,9 @@
 
 		<thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
 		<thymeleaf-layout-dialect.version>2.2.0</thymeleaf-layout-dialect.version>
+		<modelmapper.version>0.7.5</modelmapper.version>
+		<apache.commons.version>1.3.2</apache.commons.version>
+		<thymeleaf.springsecurity.version>3.0.1.RELEASE</thymeleaf.springsecurity.version>
 	</properties>
 
 	<dependencies>
@@ -47,7 +50,7 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
-			<version>3.0.1.RELEASE</version>
+			<version>${thymeleaf.springsecurity.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -81,8 +84,14 @@
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
-			<version>0.7.5</version>
+			<version>${modelmapper.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${apache.commons.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
