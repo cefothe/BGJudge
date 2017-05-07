@@ -1,10 +1,8 @@
 package com.cefothe.bgjudge.workers.compilers;
 
+import org.apache.commons.io.IOUtils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * Created by cefothe on 13.07.16.
@@ -12,18 +10,18 @@ import java.io.InputStreamReader;
 public class JavaCompiler implements  Compiler {
 
     @Override
-    public void compile(File file) throws IOException {
+    public CompilationResult compile(File file) throws IOException {
 
+        CompilationResult compilationResult = new CompilationResult();
         Process process = new ProcessBuilder("javac", file.getAbsolutePath())
                 .redirectErrorStream(false)
                 .start();
 
+        StringWriter errorWriter = new StringWriter();
+        IOUtils.copy(process.getErrorStream(),errorWriter);
+        compilationResult.setErrorStream(errorWriter.toString());
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-        //Throw same exeption
-        if(br!=null && br.readLine()!=null && !br.readLine().isEmpty()){
-            throw  new IllegalArgumentException();
-        }
+        return  compilationResult;
     }
 }

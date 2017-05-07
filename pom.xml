@@ -26,7 +26,7 @@
 		<thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
 		<thymeleaf-layout-dialect.version>2.2.0</thymeleaf-layout-dialect.version>
 		<modelmapper.version>0.7.5</modelmapper.version>
-		<apache.commons.version>3.5</apache.commons.version>
+		<apache.commons.version>1.3.2</apache.commons.version>
 		<thymeleaf.springsecurity.version>3.0.1.RELEASE</thymeleaf.springsecurity.version>
 	</properties>
 
@@ -88,9 +88,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
+			<artifactId>commons-io</artifactId>
 			<version>${apache.commons.version}</version>
 		</dependency>
+
 	</dependencies>
 
 	<build>

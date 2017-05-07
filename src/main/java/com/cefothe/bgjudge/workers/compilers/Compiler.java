@@ -11,5 +11,5 @@ public interface Compiler {
     /**
      * This run compile
      */
-    void compile(File file) throws IOException;
+    CompilationResult compile(File file) throws IOException;
 }

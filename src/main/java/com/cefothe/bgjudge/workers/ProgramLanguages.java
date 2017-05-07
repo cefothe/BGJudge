@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
  */
 public enum ProgramLanguages {
 
-    JAVA(JavaCompiler.class, JavaExecutor.class, "java");
+    JAVA(JavaCompiler.class, JavaExecutor.class, ".java");
 
     private static final Logger LOG = Logger.getLogger(ProgramLanguages.class);
 

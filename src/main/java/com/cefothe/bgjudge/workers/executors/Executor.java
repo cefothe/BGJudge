@@ -9,5 +9,5 @@ import java.util.List;
  * Created by cefothe on 13.07.16.
  */
 public interface Executor {
-    List<String> execute(File file, List<String> params)   throws IOException;
+    ExecutorResult execute(File file, ExecutorResult result)   throws IOException;
 }
