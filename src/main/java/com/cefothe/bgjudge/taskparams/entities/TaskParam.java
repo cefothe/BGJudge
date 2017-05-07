@@ -13,7 +13,7 @@ import javax.persistence.Table;
  * Created by cefothe on 05.05.17.
  */
 @Entity
-@Table(name = "task_paramm")
+@Table(name = "task_param")
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskParam  extends BaseEntity{
