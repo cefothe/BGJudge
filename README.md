@@ -8,7 +8,7 @@ BGJudge is open source system for online executions algorithams.
 We choise to use those  technologies. 
 * Java 8 SE
 * Spring Boot
-* Spring Dataf
+* Spring Data
 * Spring MVC + Thymeleaf
 
 ## Authors
