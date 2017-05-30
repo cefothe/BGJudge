@@ -24,6 +24,7 @@ public class Task extends BaseEntity{
 
     @Getter
     @Setter
+    @Lob
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
