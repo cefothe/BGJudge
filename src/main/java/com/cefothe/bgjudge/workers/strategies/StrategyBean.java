@@ -47,7 +47,7 @@ public class StrategyBean implements Strategy {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void execute(ProgramLanguages programLanguages, Submission submission, File file) throws IOException {
         CompilationResult compilationResult = compile(programLanguages, file);
-        if (compilationResult.getErrorStream() == null) {
+        if (compilationResult.getErrorStream() != null) {
             Test test = new Test(compilationResult.getErrorStream());
             submission.addTest(test);
             return;

@@ -5,9 +5,7 @@ import com.cefothe.bgjudge.tasks.entities.Task;
 import com.cefothe.bgjudge.user.entities.User;
 import com.cefothe.bgjudge.workers.entities.Test;
 import com.cefothe.common.entities.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -20,7 +18,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "submissions")
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Submission extends BaseEntity {
 
     @OneToOne
@@ -36,6 +34,7 @@ public class Submission extends BaseEntity {
     private Examens exam;
 
     @Getter
+    @Lob
     private String code;
 
     @Max(value = 100)
@@ -47,6 +46,13 @@ public class Submission extends BaseEntity {
     @OneToMany
     @Getter
     private List<Test> tests = new ArrayList<>();
+
+    public Submission(User createdBy, Task task, Examens exam, String code) {
+        this.createdBy = createdBy;
+        this.task = task;
+        this.exam = exam;
+        this.code = code;
+    }
 
     public void addTest(@NonNull Test test){
         tests.add(test);

@@ -49,7 +49,7 @@ public class JavaExecutorTest {
         assertThat(executorResult.getErrorStream(),notNullValue());
     }
 
-    private File compileJavaFile(String fileName) throws IOException {
+    public File compileJavaFile(String fileName) throws IOException {
         ProgramLanguages programLanguages = ProgramLanguages.JAVA;
         File file = new File(JavaCompilerTest.class.getResource("/compiler/" + fileName + programLanguages.getExtension()).getFile());
         programLanguages.compiler().compile(file);

@@ -2,6 +2,7 @@ package com.cefothe.bgjudge.tasks.entities;
 
 import com.cefothe.bgjudge.taskparams.entities.TaskParam;
 import com.cefothe.common.entities.BaseEntity;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "tasks")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Task extends BaseEntity{
 
     @Getter
