@@ -38,6 +38,7 @@ public class Submission extends BaseEntity {
     private String code;
 
     @Getter
+    @Setter
     @Max(value = 100)
     @Min(value = 0)
     @Column(name = "result")
@@ -46,6 +47,10 @@ public class Submission extends BaseEntity {
     @Getter
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Test> tests = new ArrayList<>();
+
+    @Getter
+    @Enumerated(EnumType.STRING)
+    private SubmissionStatus status = SubmissionStatus.IN_PROGRESS;
 
     public Submission(User createdBy, Task task, Examens exam, String code) {
         this.createdBy = createdBy;

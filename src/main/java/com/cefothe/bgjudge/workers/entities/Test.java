@@ -23,7 +23,7 @@ public class Test extends BaseEntity {
 
     @Getter
     @Setter
-    private boolean equals;
+    private boolean equals = false;
 
     @Getter
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
