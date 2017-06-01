@@ -16,6 +16,7 @@ import com.cefothe.bgjudge.workers.repositories.TestRepository;
 import com.cefothe.bgjudge.workers.repositories.TestResultsRepository;
 import com.cefothe.bgjudge.workers.strategies.Strategy;
 import com.cefothe.common.entities.BaseEntity;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +41,8 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
 
 /**
@@ -114,6 +117,13 @@ public class StrategyBeanTest {
         saveRepository(submissionRepository, submission);
 
         strategy.execute(ProgramLanguages.JAVA, submission.getId(),file);
+
+        Submission expected = submissionRepository.findOne(submission.getId());
+
+        assertThat(expected.getResult(), Matchers.equalTo(0));
+        assertThat(expected.getTests(), notNullValue());
+        assertThat(expected.getTests(), hasSize(1));
+        assertThat(expected.getTests().get(0).getCompilerError(), isEmptyOrNullString());
     }
 
 

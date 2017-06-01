@@ -41,10 +41,10 @@ public class Submission extends BaseEntity {
     @Max(value = 100)
     @Min(value = 0)
     @Column(name = "result")
-    private Integer result;
+    private Integer result = new Integer(0);
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Test> tests = new ArrayList<>();
 
     public Submission(User createdBy, Task task, Examens exam, String code) {

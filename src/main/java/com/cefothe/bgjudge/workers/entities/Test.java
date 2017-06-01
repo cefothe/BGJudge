@@ -26,7 +26,7 @@ public class Test extends BaseEntity {
     private boolean equals;
 
     @Getter
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private TestResults testResults;
 
     public Test(String compilerError) {
