@@ -1,6 +1,7 @@
 package com.cefothe.bgjudge.workers;
 
 import com.cefothe.bgjudge.submissions.entities.Submission;
+import com.cefothe.bgjudge.submissions.entities.SubmissionStatus;
 import com.cefothe.bgjudge.taskparams.entities.TaskParam;
 import com.cefothe.bgjudge.workers.checkers.Checker;
 import com.cefothe.bgjudge.workers.entities.TestResults;
@@ -49,7 +50,7 @@ public class CheckerBeanTest {
         TestResults testResultsSecond = new TestResults(taskParamSecond, "Hello Stefan", null);
         com.cefothe.bgjudge.workers.entities.Test test1 = new com.cefothe.bgjudge.workers.entities.Test(testResultsFirst);
         com.cefothe.bgjudge.workers.entities.Test test2 = new com.cefothe.bgjudge.workers.entities.Test(testResultsSecond);
-        Submission submission = new Submission(null, null, null , null);
+        Submission submission = new Submission(null, null, null , null, SubmissionStatus.IN_PROGRESS);
         submission.addTest(Arrays.asList(test1,test2));
 
         // When
@@ -72,7 +73,7 @@ public class CheckerBeanTest {
         TestResults testResultsSecond = new TestResults(taskParamSecond, "Hello Ivan", null);
         com.cefothe.bgjudge.workers.entities.Test test1 = new com.cefothe.bgjudge.workers.entities.Test(testResultsFirst);
         com.cefothe.bgjudge.workers.entities.Test test2 = new com.cefothe.bgjudge.workers.entities.Test(testResultsSecond);
-        Submission submission = new Submission(null, null, null , null);
+        Submission submission = new Submission(null, null, null , null, SubmissionStatus.IN_PROGRESS);
         submission.addTest(Arrays.asList(test1,test2));
 
         // When
@@ -90,7 +91,7 @@ public class CheckerBeanTest {
     public void checkWithCompillerError(){
         // Given
         com.cefothe.bgjudge.workers.entities.Test test1 = new com.cefothe.bgjudge.workers.entities.Test("Compiler error");
-        Submission submission = new Submission(null, null, null , null);
+        Submission submission = new Submission(null, null, null , null, SubmissionStatus.IN_PROGRESS);
         submission.addTest(Arrays.asList(test1));
 
         // When
@@ -108,7 +109,7 @@ public class CheckerBeanTest {
         // Given
         TestResults testResultsFirst = new TestResults(taskParamFirst, null, "Runtime error");
         com.cefothe.bgjudge.workers.entities.Test test1 = new com.cefothe.bgjudge.workers.entities.Test(testResultsFirst);
-        Submission submission = new Submission(null, null, null , null);
+        Submission submission = new Submission(null, null, null , null, SubmissionStatus.IN_PROGRESS);
         submission.addTest(Arrays.asList(test1));
 
         // When

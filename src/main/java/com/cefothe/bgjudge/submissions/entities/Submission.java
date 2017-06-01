@@ -49,14 +49,16 @@ public class Submission extends BaseEntity {
     private List<Test> tests = new ArrayList<>();
 
     @Getter
+    @Setter
     @Enumerated(EnumType.STRING)
-    private SubmissionStatus status = SubmissionStatus.IN_PROGRESS;
+    private SubmissionStatus status;
 
-    public Submission(User createdBy, Task task, Examens exam, String code) {
+    public Submission(User createdBy, Task task, Examens exam, String code, SubmissionStatus submissionStatus) {
         this.createdBy = createdBy;
         this.task = task;
         this.exam = exam;
         this.code = code;
+        this.status = submissionStatus;
     }
 
     public void addTest(@NonNull Test test){
