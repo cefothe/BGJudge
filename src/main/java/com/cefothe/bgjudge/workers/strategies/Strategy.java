@@ -5,10 +5,11 @@ import com.cefothe.bgjudge.workers.ProgramLanguages;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.Future;
 
 /**
  * Created by cefothe on 08.05.17.
  */
 public interface Strategy {
-    void execute(ProgramLanguages programLanguages, Long submissionId, File file) throws IOException;
+    Future<Submission> execute(ProgramLanguages programLanguages, Long submissionId, File file) throws IOException;
 }

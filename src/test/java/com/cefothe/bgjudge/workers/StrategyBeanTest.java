@@ -41,6 +41,7 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.concurrent.Future;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -96,7 +97,7 @@ public class StrategyBeanTest {
     }
 
     @Test
-    public void strategyTest() throws IOException {
+    public void strategyTest() throws IOException, InterruptedException {
 
         User user = createUser();
 
@@ -112,7 +113,8 @@ public class StrategyBeanTest {
 
         Submission submission = createSubmision(user, exam, task);
 
-        strategy.execute(ProgramLanguages.JAVA, submission.getId(),file);
+        Future<Submission> submissionFuture = strategy.execute(ProgramLanguages.JAVA, submission.getId(),file);
+        wait(submissionFuture);
 
         Submission expected = submissionRepository.findOne(submission.getId());
 
@@ -123,7 +125,7 @@ public class StrategyBeanTest {
     }
 
     @Test
-    public void strategyTestWith50Result() throws IOException {
+    public void strategyTestWith50Result() throws IOException, InterruptedException {
 
         User user = createUser();
 
@@ -141,7 +143,8 @@ public class StrategyBeanTest {
 
         Submission submission = createSubmision(user, exam, task);
 
-        strategy.execute(ProgramLanguages.JAVA, submission.getId(),file);
+        Future<Submission> submissionFuture =strategy.execute(ProgramLanguages.JAVA, submission.getId(),file);
+        wait(submissionFuture);
 
         Submission expected = submissionRepository.findOne(submission.getId());
 
@@ -164,5 +167,10 @@ public class StrategyBeanTest {
         return submission;
     }
 
+    private void wait (Future<Submission> submission) throws InterruptedException {
+        while(!(submission.isDone())){
+            Thread.sleep(10);
+        }
+    }
 
 }

@@ -20,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Status;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 import java.util.stream.Collectors;
 
 /**
@@ -51,8 +54,9 @@ public class StrategyBean implements Strategy {
         this.scoreCalculation = scoreCalculation;
     }
 
+    @Async
     @Override
-    public void execute(ProgramLanguages programLanguages, Long submissionId, File file) throws IOException {
+    public Future<Submission> execute(ProgramLanguages programLanguages, Long submissionId, File file) throws IOException {
         Submission submission = submissionRepository.findOne(submissionId);
         changeSubmissionStatus(SubmissionStatus.IN_PROGRESS, submission);
         LOGGER.info("Start executing submission with id {}", submissionId);
@@ -71,7 +75,7 @@ public class StrategyBean implements Strategy {
 
         changeSubmissionStatus(SubmissionStatus.COMPLETED,submission);
         save(submission);
-
+        return new AsyncResult<>(submission);
     }
 
     private List<Test> executeTests(ProgramLanguages programLanguages, File file, Submission submission) throws IOException {
