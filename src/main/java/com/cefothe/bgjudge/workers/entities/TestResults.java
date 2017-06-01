@@ -18,8 +18,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class TestResults extends BaseEntity {
 
-    @ManyToOne
     @Getter
+    @ManyToOne
     private TaskParam taskParam;
 
     @Getter

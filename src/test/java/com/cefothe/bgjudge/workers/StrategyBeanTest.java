@@ -15,17 +15,22 @@ import com.cefothe.bgjudge.workers.repositories.TestRepository;
 import com.cefothe.bgjudge.workers.repositories.TestResultsRepository;
 import com.cefothe.bgjudge.workers.strategies.Strategy;
 import com.cefothe.bgjudge.workers.strategies.StrategyBean;
+import com.cefothe.common.entities.BaseEntity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,11 +43,14 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Date;
 
+import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
+
 /**
  * Created by cefothe on 31.05.17.
  */
 @RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@AutoConfigureTestDatabase(connection = H2)
 public class StrategyBeanTest {
 
     @Autowired
@@ -54,8 +62,6 @@ public class StrategyBeanTest {
     @Autowired
     public SubmissionRepository submissionRepository;
 
-    @Autowired
-    public RoleRepository roleRepository;
 
     @Autowired
     public UserRepository userRepository;
@@ -64,35 +70,22 @@ public class StrategyBeanTest {
     public ExamRepository examRepository;
 
     @Autowired
-    public Strategy strategy;
+    private RoleRepository roleRepository;
 
     @Autowired
-    private TestEntityManager entityManager;
-
-    public User user;
-
-
-    @Configuration
-    @EntityScan(basePackages = "com.cefothe.bgjudge")
-    @EnableJpaRepositories(basePackages = "com.cefothe.bgjudge")
-    public static class Config{
-
-        @Bean
-        public Strategy strategy(TestRepository testRepository, TestResultsRepository testResultsRepository, SubmissionRepository submissionRepository){
-            return  new StrategyBean(testRepository,testResultsRepository, submissionRepository);
-        }
-    }
+    public Strategy strategy;
 
     @Before
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void before(){
         Role role = new Role("student");
-        roleRepository.save(role);
-        user = new User("test", "test", new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"),role);
-        userRepository.save(user);
-        entityManager.flush();
+        saveRepository(roleRepository, role);
+    }
 
 
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    private void saveRepository(CrudRepository repository, BaseEntity baseEntity){
+        repository.save(baseEntity);
     }
 
     @After
@@ -101,23 +94,27 @@ public class StrategyBeanTest {
         Arrays.stream(directory.listFiles((f, p) -> p.endsWith("class"))).forEach(File::delete);
     }
 
-
     @Test
     public void strategyTest() throws IOException {
+
+        User user = new User("test", "test", new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"),roleRepository.findOne(1L));
+        saveRepository(userRepository,user);
+
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
         Task task = new Task("Test", "test");
         TaskParam taskParam = new TaskParam("Hello World", "Hello World");
+
         task.addTaskParam(taskParam);
         exam.addTask(task);
+        saveRepository(examRepository, exam);
 
-        examRepository.save(exam);
+
         String code = new String(Files.readAllBytes(Paths.get(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getPath())));
-
         Submission submission = new Submission(user, task, exam, code);
-        submissionRepository.save(submission);
+        saveRepository(submissionRepository, submission);
 
-        strategy.execute(ProgramLanguages.JAVA, submission,file);
+        strategy.execute(ProgramLanguages.JAVA, submission.getId(),file);
     }
 
 

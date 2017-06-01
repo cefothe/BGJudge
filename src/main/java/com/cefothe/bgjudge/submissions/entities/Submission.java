@@ -21,30 +21,30 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Submission extends BaseEntity {
 
-    @OneToOne
     @Getter
+    @OneToOne
     private User createdBy;
 
-    @OneToOne
     @Getter
+    @OneToOne
     private Task task;
 
-    @OneToOne
     @Getter
+    @OneToOne
     private Examens exam;
 
     @Getter
     @Lob
     private String code;
 
+    @Getter
     @Max(value = 100)
     @Min(value = 0)
-    @Getter
     @Column(name = "result")
     private Integer result;
 
-    @OneToMany
     @Getter
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Test> tests = new ArrayList<>();
 
     public Submission(User createdBy, Task task, Examens exam, String code) {

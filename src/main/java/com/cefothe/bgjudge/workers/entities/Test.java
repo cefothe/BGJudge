@@ -16,17 +16,17 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Test extends BaseEntity {
 
+    @Getter
     @Lob
     @Column(name = "compiler_error")
-    @Getter
     private String compilerError;
 
     @Getter
     @Setter
     private boolean equals;
 
-    @OneToOne
     @Getter
+    @OneToOne(cascade = CascadeType.ALL)
     private TestResults testResults;
 
     public Test(String compilerError) {

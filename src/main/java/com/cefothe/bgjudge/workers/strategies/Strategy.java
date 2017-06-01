@@ -10,5 +10,5 @@ import java.io.IOException;
  * Created by cefothe on 08.05.17.
  */
 public interface Strategy {
-    void execute(ProgramLanguages programLanguages, Submission submission, File file) throws IOException;
+    void execute(ProgramLanguages programLanguages, Long submissionId, File file) throws IOException;
 }

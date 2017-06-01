@@ -37,6 +37,7 @@ public class StrategyBean implements Strategy {
     private final SubmissionRepository submissionRepository;
 
     @Autowired
+
     public StrategyBean(TestRepository testRepository, TestResultsRepository testResultsRepository, SubmissionRepository submissionRepository) {
         this.testRepository = testRepository;
         this.testResultsRepository = testResultsRepository;
@@ -45,8 +46,9 @@ public class StrategyBean implements Strategy {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void execute(ProgramLanguages programLanguages, Submission submission, File file) throws IOException {
+    public void execute(ProgramLanguages programLanguages, Long submissionId, File file) throws IOException {
         CompilationResult compilationResult = compile(programLanguages, file);
+        Submission submission = submissionRepository.findOne(submissionId);
         if (compilationResult.getErrorStream() != null) {
             Test test = new Test(compilationResult.getErrorStream());
             submission.addTest(test);
