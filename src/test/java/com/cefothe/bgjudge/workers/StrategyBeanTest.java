@@ -1,5 +1,6 @@
 package com.cefothe.bgjudge.workers;
 
+import com.cefothe.BGJudgeApplication;
 import com.cefothe.bgjudge.exam.entitities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.submissions.entities.Submission;
@@ -14,23 +15,19 @@ import com.cefothe.bgjudge.user.repositories.UserRepository;
 import com.cefothe.bgjudge.workers.repositories.TestRepository;
 import com.cefothe.bgjudge.workers.repositories.TestResultsRepository;
 import com.cefothe.bgjudge.workers.strategies.Strategy;
-import com.cefothe.bgjudge.workers.strategies.StrategyBean;
 import com.cefothe.common.entities.BaseEntity;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +46,8 @@ import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnec
  * Created by cefothe on 31.05.17.
  */
 @RunWith(SpringRunner.class)
+@TestPropertySource(locations="classpath:application-unittest.properties")
+@ContextConfiguration(classes = BGJudgeApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @AutoConfigureTestDatabase(connection = H2)
 public class StrategyBeanTest {
