@@ -1,18 +1,22 @@
 package com.cefothe.bgjudge.workers.executors;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by cefothe on 13.07.16.
  */
 public class JavaExecutor implements  Executor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JavaExecutor.class);
+
     @Override
     public ExecutorResult execute(File file, ExecutorResult result) throws IOException {
+        LOGGER.info("Start executing file {}", file.getAbsolutePath());
         Process process =
                 new ProcessBuilder("java","-cp", getPath(file), FilenameUtils.getBaseName(file.getName()))
                         .redirectErrorStream(false)
@@ -32,6 +36,8 @@ public class JavaExecutor implements  Executor {
         result.setOutput(IOUtils.readLines(process.getInputStream(), "UTF-8"));
 
         process.destroy();
+
+        LOGGER.info("Finish executing file {}", file.getAbsolutePath());
         return  result;
     }
 

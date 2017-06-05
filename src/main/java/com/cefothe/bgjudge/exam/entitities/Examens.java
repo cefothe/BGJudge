@@ -34,8 +34,9 @@ public class Examens  extends BaseEntity{
     @Column(name = "exam_lenght", nullable = false)
     private long examLength;
 
-    @OneToMany
+
     @Getter
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<>();
 
     @Getter
@@ -43,9 +44,9 @@ public class Examens  extends BaseEntity{
     @OneToOne(optional = false)
     private User createdBy;
 
-    @Enumerated(EnumType.STRING)
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
     private ExamStatus examStatus = ExamStatus.IN_PROGRESS;
 
     public Examens(String name, Timestamp examDate, long examLength, User createdBy) {
