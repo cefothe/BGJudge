@@ -51,7 +51,7 @@ import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnec
  * Created by cefothe on 31.05.17.
  */
 @RunWith(SpringRunner.class)
-@TestPropertySource(locations="classpath:application-unittest.properties")
+@TestPropertySource(locations = "classpath:application-unittest.properties")
 @ContextConfiguration(classes = BGJudgeApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @AutoConfigureTestDatabase(connection = H2)
@@ -80,18 +80,18 @@ public class StrategyBeanTest {
     public Strategy strategy;
 
     @Before
-    public void before(){
+    public void before() {
         Role role = new Role("student");
         saveRepository(roleRepository, role);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    private void saveRepository(CrudRepository repository, BaseEntity baseEntity){
+    private void saveRepository(CrudRepository repository, BaseEntity baseEntity) {
         repository.save(baseEntity);
     }
 
     @After
-    public void clearCompilerDirectoryFromClasses(){
+    public void clearCompilerDirectoryFromClasses() {
         File directory = new File(JavaCompilerTest.class.getResource("/compiler/").getFile());
         Arrays.stream(directory.listFiles((f, p) -> p.endsWith("class"))).forEach(File::delete);
     }
@@ -99,10 +99,10 @@ public class StrategyBeanTest {
     @Test
     public void strategyTest() throws IOException, InterruptedException {
 
-        User user = createUser();
+        User user = createUser(roleRepository.findOne(1L),true);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user);
         Task task = new Task("Test", "test");
         TaskParam taskParam = new TaskParam("Hello World", "Hello World");
 
@@ -111,9 +111,9 @@ public class StrategyBeanTest {
         saveRepository(examRepository, exam);
 
 
-        Submission submission = createSubmision(user, exam, task);
+        Submission submission = createSubmision(user, exam, task, true);
 
-        Future<Submission> submissionFuture = strategy.execute(ProgramLanguages.JAVA, submission.getId(),file);
+        Future<Submission> submissionFuture = strategy.execute(ProgramLanguages.JAVA, submission.getId(), file);
         wait(submissionFuture);
 
         Submission expected = submissionRepository.findOne(submission.getId());
@@ -127,10 +127,10 @@ public class StrategyBeanTest {
     @Test
     public void strategyTestWith50Result() throws IOException, InterruptedException {
 
-        User user = createUser();
+        User user = createUser(roleRepository.findOne(1L),true);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user);
         Task task = new Task("Test", "test");
         TaskParam taskParam = new TaskParam("Hello World", "Hello World");
         TaskParam taskParamSecond = new TaskParam("Hello Stefan", "Hello Ivan");
@@ -141,9 +141,9 @@ public class StrategyBeanTest {
         saveRepository(examRepository, exam);
 
 
-        Submission submission = createSubmision(user, exam, task);
+        Submission submission = createSubmision(user, exam, task, true);
 
-        Future<Submission> submissionFuture =strategy.execute(ProgramLanguages.JAVA, submission.getId(),file);
+        Future<Submission> submissionFuture = strategy.execute(ProgramLanguages.JAVA, submission.getId(), file);
         wait(submissionFuture);
 
         Submission expected = submissionRepository.findOne(submission.getId());
@@ -154,21 +154,25 @@ public class StrategyBeanTest {
         assertThat(expected.getTests().get(0).getCompilerError(), isEmptyOrNullString());
     }
 
-    private User createUser() {
-        User user = new User("test", "test", new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"),roleRepository.findOne(1L));
-        saveRepository(userRepository,user);
+    public User createUser(Role role, boolean persisted) {
+        User user = new User("test", "test", new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"), role);
+        if (persisted) {
+            saveRepository(userRepository, user);
+        }
         return user;
     }
 
-    private Submission createSubmision(User user, Examens exam, Task task) throws IOException {
+    public Submission createSubmision(User user, Examens exam, Task task, boolean needToBePersist) throws IOException {
         String code = new String(Files.readAllBytes(Paths.get(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getPath())));
         Submission submission = new Submission(user, task, exam, code, SubmissionStatus.IN_PROGRESS);
-        saveRepository(submissionRepository, submission);
+        if (needToBePersist) {
+            saveRepository(submissionRepository, submission);
+        }
         return submission;
     }
 
-    private void wait (Future<Submission> submission) throws InterruptedException {
-        while(!(submission.isDone())){
+    private void wait(Future<Submission> submission) throws InterruptedException {
+        while (!(submission.isDone())) {
             Thread.sleep(10);
         }
     }
