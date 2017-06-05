@@ -88,6 +88,64 @@ public class SubmissionRepositoryTest {
     }
 
     @Test
+    public void test_find_all_submission_and_one_exam_one_user() throws IOException {
+        StrategyBeanTest strategyBeanTest = new StrategyBeanTest();
+        User user = strategyBeanTest.createUser(roleRepository.findOne(1L),false);
+        saveRepository(userRepository,user);
+
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        saveRepository(examRepository, exam);
+
+        Task task = new Task("Test", "test");
+        saveRepository(taskRepositories,task);
+
+        //First submission
+        createSubmission(strategyBeanTest, user, exam, task, 100, submissionRepository);
+
+        //Second submission
+        createSubmission(strategyBeanTest, user, exam, task, 50, submissionRepository);
+
+        List<Submission> foundSubmissions =submissionRepository.findSubmissionByUserTaskExam(exam, task,user);
+
+        assertThat(foundSubmissions, hasSize(2));
+    }
+
+    @Test
+    public void test_find_all_submission_by_exam_and_users() throws IOException {
+        StrategyBeanTest strategyBeanTest = new StrategyBeanTest();
+        User user = strategyBeanTest.createUser(roleRepository.findOne(1L),false);
+        saveRepository(userRepository,user);
+
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        saveRepository(examRepository, exam);
+
+        Task task = new Task("Test", "test");
+        saveRepository(taskRepositories,task);
+
+        //First submission
+        User firstUser = createUser("Stefan", roleRepository.findOne(1L));
+        saveRepository(userRepository,firstUser);
+        Submission firstSubmission = createSubmission(strategyBeanTest, firstUser, exam, task, 100, submissionRepository);
+
+        //Second submission
+        User secondUser = createUser("Ivan", roleRepository.findOne(1L));
+        saveRepository(userRepository,secondUser);
+        Submission secondSubmission = createSubmission(strategyBeanTest, secondUser, exam, task, 50, submissionRepository);
+
+
+        List<Submission> foundSubmissionsForUserOne = submissionRepository.findSubmissionByUserTaskExam(exam, task,firstUser);
+        List<Submission> foundSubmissionsForUserTwo = submissionRepository.findSubmissionByUserTaskExam(exam, task,secondUser);
+
+        assertThat(foundSubmissionsForUserOne, hasSize(1));
+        assertThat(foundSubmissionsForUserOne.get(0).getResult(), equalTo(100));
+
+        assertThat(foundSubmissionsForUserTwo, hasSize(1));
+        assertThat(foundSubmissionsForUserTwo.get(0).getResult(), equalTo(50));
+
+    }
+
+
+    @Test
     public void test_with_two_submission_and_one_exam_two_user() throws IOException {
         StrategyBeanTest strategyBeanTest = new StrategyBeanTest();
         User user = strategyBeanTest.createUser(roleRepository.findOne(1L),false);
@@ -177,10 +235,11 @@ public class SubmissionRepositoryTest {
     }
 
 
-    private void createSubmission(StrategyBeanTest strategyBeanTest, User user, Examens exam, Task task, int result, SubmissionRepository submissionRepository) throws IOException {
+    private Submission createSubmission(StrategyBeanTest strategyBeanTest, User user, Examens exam, Task task, int result, SubmissionRepository submissionRepository) throws IOException {
         Submission submission = strategyBeanTest.createSubmision(user, exam, task, false);
         submission.setResult(result);
         saveRepository(submissionRepository, submission);
+        return submission;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
