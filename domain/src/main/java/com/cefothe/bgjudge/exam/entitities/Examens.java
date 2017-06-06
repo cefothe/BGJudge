@@ -1,8 +1,8 @@
 package com.cefothe.bgjudge.exam.entitities;
 
-import com.cefothe.common.entities.BaseEntity;
 import com.cefothe.bgjudge.tasks.entities.Task;
 import com.cefothe.bgjudge.user.entities.User;
+import com.cefothe.common.entities.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
