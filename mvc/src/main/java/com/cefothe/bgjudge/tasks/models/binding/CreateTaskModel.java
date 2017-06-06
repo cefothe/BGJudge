@@ -1,0 +1,33 @@
+package com.cefothe.bgjudge.tasks.models.binding;
+
+import lombok.Getter;
+import lombok.Setter;
+
+/**
+ * Created by cefothe on 05.05.17.
+ */
+public class CreateTaskModel {
+    @Getter
+    @Setter
+    public String titile;
+
+    @Getter
+    @Setter
+    public String description;
+
+    @Getter
+    @Setter
+    public String inputOne;
+
+    @Getter
+    @Setter
+    public String outputOne;
+
+    @Getter
+    @Setter
+    public String inputTwo;
+
+    @Getter
+    @Setter
+    public String outputTwo;
+}

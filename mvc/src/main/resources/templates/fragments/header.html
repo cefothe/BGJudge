@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<header>
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="../" class="navbar-brand">BGJudge</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a th:href="@{/}">Home</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/submissions}">Submissions</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/feedback}">FeedBack</a>
+                    </li>
+                    <th:block sec:authorize="hasAuthority('TEACHER')">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false">Teacher<span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="download">
+                                <li><a th:href="@{/exam/create}">Create Exam</a></li>
+                                <li><a th:href="@{/exam/all}">Show all exams</a></li>
+                            </ul>
+                        </li>
+                    </th:block>
+                    <th:block sec:authorize="hasAuthority('ADMIN')">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false">Admin<span class="caret"></span></a>
+                            <ul class="dropdown-menu" aria-labelledby="download">
+                                <li><a th:href="@{/news/all}">Show all news</a></li>
+                                <li><a th:href="@{/news/create}">Create news</a></li>
+                                <li><a th:href="@{/user/all}">All users</a></li>
+                            </ul>
+                        </li>
+                    </th:block>
+                </ul>
+
+                <th:block sec:authorize="isAnonymous()">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{/login}" >Login</a></li>
+                        <li><a th:href="@{/register}">Registration</a></li>
+                    </ul>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{/user/profile}" th:text="${#authentication.getPrincipal().getUsername()}"></a></li>
+                        <li><a th:href="@{/logout}" class="nav-link" id="btn-logout">Logout</a></li>
+                    </ul>
+                </th:block>
+
+            </div>
+        </div>
+    </div>
+</header>
