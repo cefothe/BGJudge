@@ -21,7 +21,7 @@ import static com.cefothe.bgjudge.submissions.entities.Submission.FIND_SUBMISSIO
  */
 @Entity
 @Table(name = "submissions")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+// @NoArgsConstructor(access = AccessLevel.PROTECTED) TODO: remove public constructor
 @NamedQueries({
         @NamedQuery(name = FIND_SUBMISSIONS_MAX_SCORE_BY_EXAM,
                 query = "SELECT new Submission(sub.createdBy, MAX(sub.result), sub.task) FROM Submission sub WHERE sub.exam =:exam GROUP BY sub.exam, sub.createdBy, sub.task"),
@@ -72,6 +72,11 @@ public class Submission extends BaseEntity {
         this.code = code;
         this.status = submissionStatus;
     }
+
+    public Submission(){
+
+    }
+
 
     /**
      * Use this constructor only in named query
