@@ -24,6 +24,6 @@ public class SendToWorker {
     }
 
     public void sendMessage(Submission submission){
-        this.rabbitTemplate.convertAndSend(queue.getName(),submission.getId());
+        this.rabbitTemplate.convertAndSend(queue.getName(),"test");
     }
 }

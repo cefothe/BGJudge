@@ -2,12 +2,10 @@ package com.cefothe.bgjudge.submissions.controller;
 
 import com.cefothe.bgjudge.submissions.dto.SubmissionTO;
 import com.cefothe.bgjudge.submissions.services.SubmissionService;
-import com.cefothe.bgjudge.submissions.services.SubmissionServiceBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -26,7 +24,8 @@ public class SubmissionController {
     }
 
     @PostMapping("create")
-    public void submit(@RequestBody SubmissionTO submissionTO) throws IOException {
+    public ResponseEntity submit(@RequestBody SubmissionTO submissionTO) throws IOException {
        submissionService.create(submissionTO);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
