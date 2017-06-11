@@ -29,7 +29,7 @@
         $(document).ready(function() {
             $(document).on('submit', '#submision > form', function () {
                 var submisions = $(this).serializeObject();
-                $.postJSON('/submission/create', submisions).done(function (data) {
+                $.postJSON('/api/submission/create', submisions).done(function (data) {
                     
                 })
                 return false;

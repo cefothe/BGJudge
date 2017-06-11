@@ -13,7 +13,7 @@ import java.io.IOException;
  * Created by cefothe on 05.05.17.
  */
 @RestController
-@RequestMapping("/submission")
+@RequestMapping("/api/submission")
 public class SubmissionController {
 
     private final SubmissionService submissionService;
@@ -24,8 +24,7 @@ public class SubmissionController {
     }
 
     @PostMapping("create")
-    public ResponseEntity submit(@RequestBody SubmissionTO submissionTO) throws IOException {
+    public void submit(@RequestBody SubmissionTO submissionTO) throws IOException {
        submissionService.create(submissionTO);
-        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }
