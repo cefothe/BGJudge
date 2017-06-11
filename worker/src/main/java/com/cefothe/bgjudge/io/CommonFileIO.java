@@ -1,7 +1,11 @@
-package com.cefothe.common.io;
+package com.cefothe.bgjudge.io;
 
+import com.cefothe.bgjudge.workers.strategies.StrategyBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.FileSystemUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -18,6 +22,8 @@ public class CommonFileIO implements FileIO {
     @Value("${file.directory}")
     public String fileDirectory;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonFileIO.class);
+
     @Override
     public File write(String fileContent, String fileName) throws IOException {
 
@@ -29,7 +35,17 @@ public class CommonFileIO implements FileIO {
         ) {
             bufferedWriter.write(fileContent);
         }
+        LOGGER.info("Create source file in {}", file.getAbsolutePath());
         return file;
+    }
+
+    @Override
+    public void deleteDirectory(File fileName) throws IOException {
+        File directory = fileName.getParentFile();
+        if(!FileSystemUtils.deleteRecursively(directory)){
+            throw  new IOException("Can't delete directory " + directory.getName());
+        }
+        LOGGER.info("Delete source file and directory related to it {}", fileName.getAbsolutePath());
     }
 
     private String generateSubDirectory() throws IOException {

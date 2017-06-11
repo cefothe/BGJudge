@@ -111,7 +111,7 @@ public class StrategyBeanTest {
 
         Submission submission = createSubmision(user, exam, task, true);
 
-        Future<Submission> submissionFuture = strategy.execute(ProgramLanguages.JAVA, submission.getId(), file);
+        Future<Submission> submissionFuture = strategy.execute(submission.getId());
         wait(submissionFuture);
 
         Submission expected = submissionRepository.findOne(submission.getId());
@@ -141,7 +141,7 @@ public class StrategyBeanTest {
 
         Submission submission = createSubmision(user, exam, task, true);
 
-        Future<Submission> submissionFuture = strategy.execute(ProgramLanguages.JAVA, submission.getId(), file);
+        Future<Submission> submissionFuture = strategy.execute(submission.getId());
         wait(submissionFuture);
 
         Submission expected = submissionRepository.findOne(submission.getId());

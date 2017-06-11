@@ -52,4 +52,8 @@ public enum ProgramLanguages {
         return extension;
     }
 
+    public String fileWithExtension(String fileName){
+        return  fileName + getExtension();
+    }
+
 }

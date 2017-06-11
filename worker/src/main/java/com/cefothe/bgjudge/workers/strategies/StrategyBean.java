@@ -1,5 +1,7 @@
 package com.cefothe.bgjudge.workers.strategies;
 
+import com.cefothe.bgjudge.common.RegexUtils;
+import com.cefothe.bgjudge.io.FileIO;
 import com.cefothe.bgjudge.submissions.entities.Submission;
 import com.cefothe.bgjudge.submissions.entities.SubmissionStatus;
 import com.cefothe.bgjudge.submissions.repositories.SubmissionRepository;
@@ -17,6 +19,7 @@ import com.cefothe.bgjudge.workers.executors.ExecutorResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
@@ -44,19 +47,25 @@ public class StrategyBean implements Strategy {
 
     private final ScoreCalculation scoreCalculation;
 
+    private final FileIO fileIO;
+
     @Autowired
-    public StrategyBean(SubmissionRepository submissionRepository, Checker checker, ScoreCalculation scoreCalculation) {
+    public StrategyBean(SubmissionRepository submissionRepository, Checker checker, ScoreCalculation scoreCalculation, FileIO fileIO) {
         this.submissionRepository = submissionRepository;
         this.checker = checker;
         this.scoreCalculation = scoreCalculation;
+        this.fileIO = fileIO;
     }
 
     @Async
     @Override
-    public Future<Submission> execute(ProgramLanguages programLanguages, Long submissionId, File file) throws IOException {
+    public Future<Submission> execute(Long submissionId) throws IOException {
         Submission submission = submissionRepository.findOne(submissionId);
+        ProgramLanguages programLanguages = ProgramLanguages.JAVA;
         changeSubmissionStatus(SubmissionStatus.IN_PROGRESS, submission);
         LOGGER.info("Start executing submission with id {}", submissionId);
+        String fileName = RegexUtils.findClassName(submission.getCode());
+        File file = fileIO.write(submission.getCode(), programLanguages.fileWithExtension(fileName));
 
         CompilationResult compilationResult = compile(programLanguages, file);
 
@@ -72,6 +81,7 @@ public class StrategyBean implements Strategy {
 
         changeSubmissionStatus(SubmissionStatus.COMPLETED,submission);
         save(submission);
+        fileIO.deleteDirectory(file);
         return new AsyncResult<>(submission);
     }
 

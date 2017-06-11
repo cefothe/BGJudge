@@ -16,7 +16,6 @@ public class SendToWorker {
 
     private final Queue queue;
 
-
     @Autowired
     public SendToWorker(RabbitTemplate rabbitTemplate, Queue queue) {
         this.rabbitTemplate = rabbitTemplate;
@@ -24,6 +23,6 @@ public class SendToWorker {
     }
 
     public void sendMessage(Submission submission){
-        this.rabbitTemplate.convertAndSend(queue.getName(),"test");
+        this.rabbitTemplate.convertAndSend(queue.getName(),submission.getId());
     }
 }

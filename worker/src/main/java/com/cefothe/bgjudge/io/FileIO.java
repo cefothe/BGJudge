@@ -1,4 +1,4 @@
-package com.cefothe.common.io;
+package com.cefothe.bgjudge.io;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,4 +8,5 @@ import java.io.IOException;
  */
 public interface FileIO {
     File write(String content, String file) throws IOException;
+    void deleteDirectory(File directory) throws IOException;
 }

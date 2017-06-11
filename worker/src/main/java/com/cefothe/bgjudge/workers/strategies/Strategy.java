@@ -11,5 +11,5 @@ import java.util.concurrent.Future;
  * Created by cefothe on 08.05.17.
  */
 public interface Strategy {
-    Future<Submission> execute(ProgramLanguages programLanguages, Long submissionId, File file) throws IOException;
+    Future<Submission> execute(Long submissionId) throws IOException;
 }
