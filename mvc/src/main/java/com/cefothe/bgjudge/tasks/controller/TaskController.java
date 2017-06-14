@@ -1,5 +1,6 @@
 package com.cefothe.bgjudge.tasks.controller;
 
+import com.cefothe.bgjudge.tasks.models.binding.CreateTaskModel;
 import lombok.Getter;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -17,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TaskController {
 
     @GetMapping("{id}/create")
-    public String createTask(Model model, @PathVariable("id") Long examId){
+    public String createTask(Model model, CreateTaskModel createTaskModel, @PathVariable("id") Long examId){
         model.addAttribute("title", "Create task");
         model.addAttribute("view", "task/create");
+        model.addAttribute("createTaskModel", createTaskModel);
         return "base-layout";
     }
 }
