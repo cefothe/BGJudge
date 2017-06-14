@@ -1,5 +1,5 @@
 # BGJudge
-BGJudge is open source system for online executions algorithams.
+BGJudge is open source system for online executions algorithms. 
 
 ## Suported languages
 * Java 8
