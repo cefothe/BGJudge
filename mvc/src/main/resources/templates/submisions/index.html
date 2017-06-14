@@ -1,6 +1,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<main class="col-4 offset-4 text-center">
+<main class="col-4 offset-4">
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
@@ -9,9 +9,9 @@
                         <fieldset>
                             <legend>Create exam</legend>
                             <div class="form-group">
-                                <label for="code" class="col-lg-2 control-label">Name</label>
-                                <div class="col-lg-10">
-                                    <textarea name="code" id="code"></textarea>
+                                <label for="java-code" class="col-lg-2 control-label">Name</label>
+                                <div>
+                                    <textarea id="java-code"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -35,6 +35,11 @@
                 return false;
             });
         });
+            var javaEditor = CodeMirror.fromTextArea(document.getElementById("java-code"), {
+                lineNumbers: true,
+                matchBrackets: true,
+                mode: "text/x-java"
+            });
     </script>
 </main>
 </html>
