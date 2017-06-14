@@ -20,6 +20,10 @@ public class ViewExamDetailsModel implements Serializable {
 
     @Getter
     @Setter
+    public Long id;
+
+    @Getter
+    @Setter
     public String name;
 
     @Getter
@@ -30,6 +34,7 @@ public class ViewExamDetailsModel implements Serializable {
     @Getter
     @Setter
     public long examLength;
+
     @Getter
     public List<Task> tasks;
 

@@ -9,7 +9,7 @@ import lombok.Setter;
 public class CreateTaskModel {
     @Getter
     @Setter
-    public String titile;
+    public String title;
 
     @Getter
     @Setter

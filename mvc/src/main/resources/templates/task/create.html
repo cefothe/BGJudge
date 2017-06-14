@@ -1,39 +1,59 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 
-<main class="col-4 offset-4 text-center">
+<main class="col-10 offset-4 text-center">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-10">
                 <div class="well bs-component">
-                    <form th:action="@{/exam/create}" method="post" class="form-horizontal" th:object="${createExamModel}">
+                    <form th:action="@{/exam/create}" method="post" class="form-horizontal" th:object="${createTaskModel}">
                         <fieldset>
-                            <legend>Create exam</legend>
+                            <legend>Create task</legend>
                             <div class="form-group">
-                                <label for="name" class="col-lg-2 control-label">Name</label>
+                                <label for="title" class="col-lg-2 control-label">Title</label>
                                 <div class="col-lg-10">
-                                    <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Exam name">
+                                    <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Task title">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="examDate" class="col-lg-2 control-label">Exam date</label>
+                                <label for="description" class="col-lg-2 control-label" >Description</label>
                                 <div class="col-lg-10">
-                                    <input type="datetime-local" th:field="*{examDate}" class="form-control" id="examDate" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="examLength" class="col-lg-2 control-label">Exam length</label>
-                                <div class="col-lg-10">
-                                    <input type="text" th:field="*{examLength}" class="form-control" id="examLength" placeholder="Password">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-lg-10 col-lg-offset-2">
-                                    <button type="reset" class="btn btn-default">Cancel</button>
-                                    <button type="submit" class="btn btn-primary">Create</button>
+                                    <textarea type="text" th:field="*{description}"  class="form-control" id="description"></textarea>
                                 </div>
                             </div>
                         </fieldset>
+                        <fieldset>
+                            <legend>Create test cases</legend>
+                            <div class="form-group">
+                                <label for="inputOne" class="col-lg-2 control-label" >Input test case 1</label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" th:field="*{inputOne}"  class="form-control" id="inputOne"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="outputOne" class="col-lg-2 control-label" >Output test case 1</label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" th:field="*{outputOne}"  class="form-control" id="outputOne"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputTwo" class="col-lg-2 control-label" >Input test case 2</label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" th:field="*{inputTwo}"  class="form-control" id="inputTwo"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="outputTwo" class="col-lg-2 control-label" >Output test case 2</label>
+                                <div class="col-lg-10">
+                                    <textarea type="text" th:field="*{outputTwo}"  class="form-control" id="outputTwo"></textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="reset" class="btn btn-default">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Create</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
