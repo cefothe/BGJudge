@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-lg-10">
                 <div class="well bs-component">
-                    <form th:action="@{/exam/create}" method="post" class="form-horizontal" th:object="${createTaskModel}">
+                    <form th:action="@{/task/{examId}/create(examId=${examId})}" method="post" class="form-horizontal" th:object="${createTaskModel}">
                         <fieldset>
                             <legend>Create task</legend>
                             <div class="form-group">

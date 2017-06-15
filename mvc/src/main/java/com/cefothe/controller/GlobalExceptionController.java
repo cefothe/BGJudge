@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionController {
 
-    @ExceptionHandler(Exception.class)
+ //   @ExceptionHandler(Exception.class)
     public String getException(Model model){
         model.addAttribute("view","error/global-error");
         model.addAttribute("title", "Problem with your request");
