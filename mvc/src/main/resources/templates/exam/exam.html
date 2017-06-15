@@ -2,10 +2,10 @@
 
 <main class="col-4 offset-4 text-center">
     <div class="container">
-        <div class="row" >
+        <div class="row"  th:object="${viewExamDetailsModel}">
             <div class="col-lg-6">
                 <div class="well bs-component">
-                    <form  class="form-horizontal" th:object="${viewExamDetailsModel}">
+                    <form  class="form-horizontal">
                         <fieldset>
                             <legend>Create exam</legend>
                             <div class="form-group">
@@ -33,7 +33,7 @@
             </div>
             <div class="col-lg-6">
                 <a href="#" class="btn btn-primary">Published</a>
-                <a th:href="@{/}">Add task</a>
+                <a th:href="${'/task/'+{id}+'/create'}">Add task</a>
             </div>
         </div>
         <div class="row">

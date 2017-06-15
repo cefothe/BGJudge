@@ -45,4 +45,10 @@ public class Task extends BaseEntity{
             taskPrams.add(taskParam);
         }
     }
+
+    public void addTaskParams(List<TaskParam> taskParams){
+        if(taskParams!=null){
+            this.taskPrams.addAll(taskParams);
+        }
+    }
 }
