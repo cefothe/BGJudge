@@ -37,13 +37,16 @@ public class TaskServiceBean implements TaskService {
     @Override
     public void createTask(CreateTaskModel createTaskModel, Long examId) {
         this.modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
-        Converter<CreateTaskModel, Task> taskConverter = context -> {
+        Converter<CreateTaskModel, Task> taskConverter = new Converter<CreateTaskModel, Task>() {
+            @Override
+            public Task convert(MappingContext<CreateTaskModel, Task> context) {
             CreateTaskModel source = context.getSource();
             List<TaskParam> taskParams = Arrays.asList(new TaskParam(source.getInputOne(), source.getOutputOne()),new TaskParam(source.getInputTwo(), source.getOutputTwo()));
             Task task = new Task(source.getTitle(),source.getDescription());
             task.addTaskParams(taskParams);
             return task;
-        };
+        }};
+
         this.modelMapper.addConverter(taskConverter);
         Task task = this.modelMapper.map(createTaskModel,Task.class);
         taskRepositories.save(task);
