@@ -11,8 +11,8 @@ services:
   database:
     image: mysql:5.7
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: judge
+      MYSQL_ROOT_PASSWORD: 021358
     hostname: localhost
+    restart: always
     ports:
       - "3306:3306"
