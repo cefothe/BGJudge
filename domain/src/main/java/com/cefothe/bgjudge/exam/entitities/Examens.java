@@ -3,9 +3,9 @@ package com.cefothe.bgjudge.exam.entitities;
 import com.cefothe.bgjudge.tasks.entities.Task;
 import com.cefothe.bgjudge.user.entities.User;
 import com.cefothe.common.entities.BaseEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,6 +18,8 @@ import java.util.List;
 @Entity
 @Table(name = "examens")
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Examens  extends BaseEntity{
 
     @Getter
@@ -36,7 +38,8 @@ public class Examens  extends BaseEntity{
 
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Task> tasks = new ArrayList<>();
 
     @Getter
@@ -47,6 +50,7 @@ public class Examens  extends BaseEntity{
     @Getter
     @Setter
     @Enumerated(EnumType.STRING)
+    @Fetch(FetchMode.SUBSELECT)
     private ExamStatus examStatus = ExamStatus.IN_PROGRESS;
 
     public Examens(String name, Timestamp examDate, long examLength, User createdBy) {

@@ -1,8 +1,18 @@
-rabbitmq:
-  image: rabbitmq:management
-  ports:
-    - "5672:5672"
-    - "15672:15672"
-  environment:
-    RABBITMQ_DEFAULT_USER: "rabbitmq"
-    RABBITMQ_DEFAULT_PASS: "rabbitmq"
+version: "2"
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 021358
+    hostname: localhost
+    restart: always
+    ports:
+      - "3306:3306"

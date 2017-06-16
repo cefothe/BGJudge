@@ -1,5 +1,6 @@
 package com.cefothe.bgjudge.exam.services;
 
+import com.cefothe.bgjudge.exam.entitities.ExamStatus;
 import com.cefothe.bgjudge.exam.entitities.Examens;
 import com.cefothe.bgjudge.exam.models.binding.CreateExamModel;
 import com.cefothe.bgjudge.exam.models.view.ViewExamDetailsModel;
@@ -14,6 +15,7 @@ public interface ExamService {
     void create(CreateExamModel createExamModel);
     Examens update(Examens examens);
     void delete(Long id);
+    void changeStatus(ExamStatus examStatus, Long examId);
     List<ViewExamModel> getAllExams();
     ViewExamDetailsModel get(Long id);
 }

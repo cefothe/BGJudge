@@ -1,5 +1,6 @@
 package com.cefothe.bgjudge.exam.services;
 
+import com.cefothe.bgjudge.exam.entitities.ExamStatus;
 import com.cefothe.bgjudge.exam.models.view.ViewExamDetailsModel;
 import com.cefothe.common.component.AuthenticationFacade;
 import com.cefothe.bgjudge.exam.entitities.Examens;
@@ -47,6 +48,13 @@ public class ExamServiceBean implements ExamService {
     @Override
     public void delete(Long id) {
 
+    }
+
+    @Override
+    public void changeStatus(ExamStatus examStatus, Long examId) {
+        Examens examens = examRepository.findOne(examId);
+        examens.setExamStatus(examStatus);
+        examRepository.save(examens);
     }
 
     @Override

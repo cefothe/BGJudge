@@ -28,6 +28,8 @@ import static com.cefothe.bgjudge.submissions.entities.Submission.FIND_SUBMISSIO
         @NamedQuery(name = FIND_SUBMISSIONS_BY_USER_TASK_EXAM,
                 query = "SELECT sub FROM Submission sub WHERE sub.exam =:exam and sub.task =:task and sub.createdBy =:user")
 })
+@EqualsAndHashCode
+@ToString
 public class Submission extends BaseEntity {
 
     public static final String FIND_SUBMISSIONS_MAX_SCORE_BY_EXAM = "Submission.findSubmissionMaxScoreByExam";

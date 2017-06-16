@@ -1,8 +1,7 @@
 package com.cefothe.bgjudge.user.entities;
 
 import com.cefothe.common.entities.BaseEntity;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
@@ -14,7 +13,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "users")
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
+@ToString
 public class User extends BaseEntity implements UserDetails {
 
     @Getter
