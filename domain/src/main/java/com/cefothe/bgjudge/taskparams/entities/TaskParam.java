@@ -15,6 +15,8 @@ import java.util.List;
 @Table(name = "task_param")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class TaskParam extends BaseEntity{
 
     @Getter

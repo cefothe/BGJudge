@@ -2,10 +2,7 @@ package com.cefothe.bgjudge.tasks.entities;
 
 import com.cefothe.bgjudge.taskparams.entities.TaskParam;
 import com.cefothe.common.entities.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -19,6 +16,8 @@ import java.util.List;
 @Entity
 @Table(name = "tasks")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
+@ToString
 public class Task extends BaseEntity{
 
     @Getter
