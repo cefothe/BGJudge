@@ -38,7 +38,7 @@ public class Examens  extends BaseEntity{
 
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<Task> tasks = new ArrayList<>();
 
