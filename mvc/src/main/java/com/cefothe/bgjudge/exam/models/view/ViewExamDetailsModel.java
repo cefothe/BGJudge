@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +37,8 @@ public class ViewExamDetailsModel implements Serializable {
     public long examLength;
 
     @Getter
-    public List<Task> tasks;
+    @Setter
+    public List<Task> tasks = new ArrayList<>();
 
     @Getter
     @Setter

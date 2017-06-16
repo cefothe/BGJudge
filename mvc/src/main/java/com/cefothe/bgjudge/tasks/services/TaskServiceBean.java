@@ -52,5 +52,6 @@ public class TaskServiceBean implements TaskService {
         taskRepositories.save(task);
         Examens exam = examRepository.findOne(examId);
         exam.addTask(task);
+        examRepository.save(exam);
     }
 }
