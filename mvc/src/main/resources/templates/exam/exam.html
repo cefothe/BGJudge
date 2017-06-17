@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <a href="#" class="btn btn-danger" th:attr="data-exam-id=${viewExamDetailsModel.id}" data-exam-status="DELETE">Delete</a>
+                <a href="#" class="btn btn-danger" th:attr="data-exam-id=${viewExamDetailsModel.id}" data-exam-status="DELETED">Delete</a>
                 <a href="#" class="btn btn-primary" th:attr="data-exam-id=${viewExamDetailsModel.id}" data-exam-status="PUBLISHED">Published</a>
                 <a th:href="${'/task/'+{id}+'/create'}">Add task</a>
             </div>
@@ -73,8 +73,9 @@
             $(document).on('click', 'a.btn', function () {
                 var examStatus = $(this).attr('data-exam-status');
                 var examId = $(this).attr('data-exam-id');
-                $.post("/api/exam/"+examId+"/"+examStatus, function () {
-                    
+                $.post("/api/exam/"+examId+"/status/"+examStatus, function () {
+                }).done(function () {
+                    location.reload();
                 })
             })
         });
