@@ -1,6 +1,6 @@
 package com.cefothe.bgjudge.submissions.entities;
 
-import com.cefothe.bgjudge.exam.entitities.Examens;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.tasks.entities.Task;
 import com.cefothe.bgjudge.user.entities.User;
 import com.cefothe.bgjudge.workers.entities.Test;

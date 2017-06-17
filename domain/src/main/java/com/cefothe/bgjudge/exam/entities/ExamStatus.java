@@ -1,4 +1,4 @@
-package com.cefothe.bgjudge.exam.entitities;
+package com.cefothe.bgjudge.exam.entities;
 
 /**
  * Created by cefothe on 04.05.17.

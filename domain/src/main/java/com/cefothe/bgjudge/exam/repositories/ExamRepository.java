@@ -1,6 +1,6 @@
 package com.cefothe.bgjudge.exam.repositories;
 
-import com.cefothe.bgjudge.exam.entitities.Examens;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.cefothe.bgjudge.exam.entitities;
+package com.cefothe.bgjudge.exam.entities;
 
 import com.cefothe.bgjudge.tasks.entities.Task;
 import com.cefothe.bgjudge.user.entities.User;
