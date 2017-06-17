@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<main class="col-4 offset-4 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6" style=" float: none; margin: 0 auto;">
+                <div class="text-center"><h1 class="display-3">Login into exam </h1></div>
+                <br/>
+                <div class="well bs-component">
+                    <form th:action="@{/login}" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="key" class="col-lg-2 control-label">Password</label>
+                            <div class="col-lg-10">
+                            <input type="password" id="key"
+                                   class="form-control" placeholder="Password"/>
+                            </div>
+                        </div>
+
+                        <!--<input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+
+                        <input type="submit" class="btn btn-outline-warning btn-lg btn-block" id="login"
+                               value="Login"/>
+                    </form>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+</main>
+</html>
