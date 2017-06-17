@@ -15,6 +15,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="examStatus" class="col-lg-2 control-label">Exam status</label>
+                                <div class="col-lg-10">
+                                    <input type="text" class="form-control" id="examStatus" disabled th:field="*{examStatus}" placeholder="Exam status">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="examDate" class="col-lg-2 control-label">Exam date</label>
                                 <div class="col-lg-10">
                                     <input type="datetime-local" th:field="*{examDate}" disabled class="form-control" id="examDate" placeholder="Exam Date">
@@ -32,8 +38,8 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <a href="#" class="btn btn-danger">Delete</a>
-                <a href="#" class="btn btn-primary">Published</a>
+                <a href="#" class="btn btn-danger" th:attr="data-exam-id=${viewExamDetailsModel.id}" data-exam-status="DELETED">Delete</a>
+                <a href="#" class="btn btn-primary" th:attr="data-exam-id=${viewExamDetailsModel.id}" data-exam-status="PUBLISHED">Published</a>
                 <a th:href="${'/task/'+{id}+'/create'}">Add task</a>
             </div>
         </div>
@@ -62,5 +68,17 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $(document).on('click', 'a.btn', function () {
+                var examStatus = $(this).attr('data-exam-status');
+                var examId = $(this).attr('data-exam-id');
+                $.post("/api/exam/"+examId+"/status/"+examStatus, function () {
+                }).done(function () {
+                    location.reload();
+                })
+            })
+        });
+    </script>
 </main>
 </html>
