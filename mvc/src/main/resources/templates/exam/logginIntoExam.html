@@ -7,16 +7,14 @@
                 <div class="text-center"><h1 class="display-3">Login into exam </h1></div>
                 <br/>
                 <div class="well bs-component">
-                    <form th:action="@{/login}" method="post" class="form-horizontal">
+                    <form method="post" class="form-horizontal" th:object="${loginIntoExamModel}">
                         <div class="form-group">
                             <label for="key" class="col-lg-2 control-label">Password</label>
                             <div class="col-lg-10">
                             <input type="password" id="key"
-                                   class="form-control" placeholder="Password"/>
+                                   class="form-control" th:field="*{examPassword}" placeholder="Password"/>
                             </div>
                         </div>
-
-                        <!--<input id="csrf" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
 
                         <input type="submit" class="btn btn-outline-warning btn-lg btn-block" id="login"
                                value="Login"/>
