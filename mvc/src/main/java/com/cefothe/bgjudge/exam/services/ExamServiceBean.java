@@ -1,5 +1,6 @@
 package com.cefothe.bgjudge.exam.services;
 
+import com.cefothe.bgjudge.exam.entities.ExamSecurity;
 import com.cefothe.bgjudge.exam.entities.ExamStatus;
 import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.models.view.ViewExamDetailsModel;
@@ -8,12 +9,20 @@ import com.cefothe.common.component.AuthenticationFacade;
 import com.cefothe.bgjudge.exam.models.binding.CreateExamModel;
 import com.cefothe.bgjudge.exam.models.view.ViewExamModel;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,8 +45,28 @@ public class ExamServiceBean implements ExamService {
 
     @Override
     public void create(CreateExamModel createExamModel) {
+        Converter<CreateExamModel, Examens> examConverter = new Converter<CreateExamModel, Examens>() {
+
+            @Override
+            public Examens convert(MappingContext<CreateExamModel, Examens> context) {
+                CreateExamModel createExamModel = context.getSource();
+                ExamSecurity examSecurity = new ExamSecurity(createExamModel.getExamPassword(), Arrays.asList(createExamModel.getAllowedIP()));
+
+                DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+                Date date = null;
+                try {
+                    date = formatter.parse(createExamModel.getExamDate());
+                } catch (ParseException e) {
+
+                }
+                java.sql.Timestamp examDate = new Timestamp(date.getTime());
+
+                return  new Examens(createExamModel.getName(),examDate, createExamModel.getExamLength(),authenticationFacade.getUser(), examSecurity);
+
+            }
+        };
+        this.modelMapper.addConverter(examConverter);
         Examens examens = this.modelMapper.map(createExamModel,Examens.class);
-        examens.setCreatedBy(this.authenticationFacade.getUser());
         this.examRepository.save(examens);
     }
 

@@ -1,6 +1,7 @@
 package com.cefothe.bgjudge.tasks.services;
 
 import com.cefothe.MvcApplication;
+import com.cefothe.bgjudge.exam.entities.ExamSecurity;
 import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.taskparams.entities.TaskParam;
@@ -11,6 +12,7 @@ import com.cefothe.bgjudge.user.entities.Role;
 import com.cefothe.bgjudge.user.entities.User;
 import com.cefothe.bgjudge.user.repositories.RoleRepository;
 import com.cefothe.bgjudge.user.repositories.UserRepository;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -49,6 +52,13 @@ public class TaskServiceBeanTest {
     @Autowired
     private UserRepository userRepository;
 
+    private ExamSecurity examSecurity;
+
+    @Before
+    public void before(){
+        this.examSecurity = new ExamSecurity("TestPassword", Collections.emptyList());
+    }
+
     @Test
     public void testAddTask(){
         // Expected
@@ -57,7 +67,7 @@ public class TaskServiceBeanTest {
         User user = new User("Stefan", "password",null, role);
         userRepository.save(user);
 
-        Examens examens = new Examens("Java Exam", new Timestamp(new Date().getTime()),120, user);
+        Examens examens = new Examens("Java Exam", new Timestamp(new Date().getTime()),120, user, this.examSecurity);
         examRepository.save(examens);
         CreateTaskModel createTaskModel = new CreateTaskModel("Test", "This is a test", "Stefan", "Hello, Stefan", "Ivan", "Hello, Ivan");
 

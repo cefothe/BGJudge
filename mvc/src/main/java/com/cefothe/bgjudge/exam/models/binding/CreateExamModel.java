@@ -6,7 +6,6 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by cefothe on 04.05.17.
@@ -20,11 +19,17 @@ public class CreateExamModel implements Serializable {
 
     @Getter
     @Setter
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    public Date examDate;
+    public String examDate;
 
     @Getter
     @Setter
     public long examLength;
 
+    @Getter
+    @Setter
+    public String examPassword;
+
+    @Getter
+    @Setter
+    public String allowedIP;
 }
