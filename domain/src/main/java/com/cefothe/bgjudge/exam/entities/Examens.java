@@ -53,11 +53,16 @@ public class Examens  extends BaseEntity{
     @Fetch(FetchMode.SUBSELECT)
     private ExamStatus examStatus = ExamStatus.IN_PROGRESS;
 
-    public Examens(String name, Timestamp examDate, long examLength, User createdBy) {
+    @OneToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    private ExamSecurity examSecurity;
+
+    public Examens(String name, Timestamp examDate, long examLength, User createdBy, ExamSecurity examSecurity ) {
         this.name = name;
         this.examDate = examDate;
         this.examLength = examLength;
         this.createdBy = createdBy;
+        this.examSecurity = examSecurity;
         this.examStatus = ExamStatus.IN_PROGRESS;
     }
 
