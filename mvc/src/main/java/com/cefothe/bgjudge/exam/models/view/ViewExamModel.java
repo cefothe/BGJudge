@@ -1,6 +1,6 @@
 package com.cefothe.bgjudge.exam.models.view;
 
-import com.cefothe.bgjudge.exam.entitities.ExamStatus;
+import com.cefothe.bgjudge.exam.entities.ExamStatus;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;

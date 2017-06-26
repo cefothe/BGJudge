@@ -1,6 +1,6 @@
 package com.cefothe.bgjudge.exam.controller;
 
-import com.cefothe.bgjudge.exam.entitities.ExamStatus;
+import com.cefothe.bgjudge.exam.entities.ExamStatus;
 import com.cefothe.bgjudge.exam.services.ExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

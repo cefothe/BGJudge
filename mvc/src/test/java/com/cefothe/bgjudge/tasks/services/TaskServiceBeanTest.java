@@ -1,8 +1,7 @@
 package com.cefothe.bgjudge.tasks.services;
 
 import com.cefothe.MvcApplication;
-import com.cefothe.bgjudge.exam.entitities.Examens;
-import com.cefothe.bgjudge.exam.models.binding.CreateExamModel;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.taskparams.entities.TaskParam;
 import com.cefothe.bgjudge.tasks.entities.Task;
@@ -17,7 +16,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
