@@ -44,4 +44,9 @@ public class ParticipantServiceBean implements ParticipantService {
         }
         return false;
     }
+
+    @Override
+    public boolean checkParticipantAndExam(Long examId) {
+        return false;
+    }
 }

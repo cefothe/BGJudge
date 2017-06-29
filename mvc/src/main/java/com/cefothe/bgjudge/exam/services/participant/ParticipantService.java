@@ -7,4 +7,5 @@ import com.cefothe.bgjudge.exam.models.binding.LoginIntoExamModel;
  */
 public interface ParticipantService {
     boolean addParticipantIntoExam(Long examId, LoginIntoExamModel loginIntoExamModel);
+    boolean checkParticipantAndExam(Long examId);
 }

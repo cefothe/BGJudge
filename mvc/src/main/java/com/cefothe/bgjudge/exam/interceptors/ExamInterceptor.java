@@ -1,6 +1,7 @@
 package com.cefothe.bgjudge.exam.interceptors;
 
 import com.cefothe.bgjudge.exam.services.participant.ParticipantService;
+import com.cefothe.common.component.AuthenticationFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerMapping;
@@ -17,10 +18,12 @@ import java.util.Map;
 public class ExamInterceptor extends HandlerInterceptorAdapter {
 
     private final ParticipantService participantService;
+    private final AuthenticationFacade authenticationFacade;
 
     @Autowired
-    public ExamInterceptor(ParticipantService participantService) {
+    public ExamInterceptor(ParticipantService participantService, AuthenticationFacade authenticationFacade) {
         this.participantService = participantService;
+        this.authenticationFacade = authenticationFacade;
     }
 
     @Override
