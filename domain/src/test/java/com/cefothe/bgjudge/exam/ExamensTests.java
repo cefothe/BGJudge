@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -31,8 +32,9 @@ public class ExamensTests {
 
     @Test
     public void testExamAvaiblePUBLISHED(){
-        Date previusValue = java.sql.Date.valueOf(LocalDateTime.now().minusMinutes(1).toLocalDate());
-        Timestamp timestamp = new Timestamp(previusValue.getTime());
+        Date out = Date.from(LocalDateTime.now().minusMinutes(5).atZone(ZoneId.systemDefault()).toInstant());
+        Timestamp timestamp = new Timestamp(out.getTime());
+
         Examens examens = new Examens("Test", timestamp,120, new User(null,null,null,null), null);
         examens.setExamStatus(ExamStatus.PUBLISHED);
         assertThat(examens.checkIfExamAvailable(), equalTo(true));
