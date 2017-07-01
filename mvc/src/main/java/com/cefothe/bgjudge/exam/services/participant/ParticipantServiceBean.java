@@ -52,7 +52,7 @@ public class ParticipantServiceBean implements ParticipantService {
         Examens examens = this.examRepository.findOne(examId);
         Participant participant = this.participantRepository.findByExamens(examens);
         if(participant!= null){
-            return participant.getParticipants().contains(this.authenticationFacade.getUser());
+            return participant.getParticipants().contains(this.authenticationFacade.getUser()) && examens.checkIfExamAvailable();
         }
         return false;
     }
