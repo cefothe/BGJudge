@@ -3,6 +3,7 @@ package com.cefothe.bgjudge.exam.controller;
 import com.cefothe.bgjudge.exam.models.binding.LoginIntoExamModel;
 import com.cefothe.bgjudge.exam.services.participant.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +36,15 @@ public class StudentExamController {
     @PostMapping("/{examId}/login")
     public String logIntoExam(@PathVariable("examId") Long examId, LoginIntoExamModel loginIntoExamModel){
         if(participantService.addParticipantIntoExam(examId,loginIntoExamModel)){
-            // TODO: show all tasks
-            return "redirect:/exam/all";
+            return "redirect:/exam/"+examId+"/tasks";
         }
         return "redirect:/exam/"+examId+"/login";
+    }
+
+    @GetMapping("/{examId}/tasks")
+    public String tasks(@PathVariable("examId") Long examId, Model model){
+        model.addAttribute("title", "Exam view");
+        model.addAttribute("view","exam/studentExam");
+        return "base-layout";
     }
 }

@@ -25,6 +25,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(this.titleInterceptor).excludePathPatterns("/api/**");
-        registry.addInterceptor(this.examInterceptor).addPathPatterns("/");// TODO: defined good url
+        registry.addInterceptor(this.examInterceptor).addPathPatterns("/exam/*/tasks");
     }
 }

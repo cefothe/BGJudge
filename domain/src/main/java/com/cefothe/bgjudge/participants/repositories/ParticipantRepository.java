@@ -1,5 +1,6 @@
 package com.cefothe.bgjudge.participants.repositories;
 
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.participants.entities.Participant;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -9,4 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ParticipantRepository extends CrudRepository<Participant, Long>{
+    Participant findByExamens(Examens examens);
 }

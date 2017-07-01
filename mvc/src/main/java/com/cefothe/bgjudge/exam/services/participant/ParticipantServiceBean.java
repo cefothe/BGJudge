@@ -41,12 +41,19 @@ public class ParticipantServiceBean implements ParticipantService {
                 participant = new Participant(exam);
             }
             participant.addParticipant(authenticationFacade.getUser());
+            this.participantRepository.save(participant);
+            return true;
+
         }
-        return false;
     }
 
     @Override
     public boolean checkParticipantAndExam(Long examId) {
+        Examens examens = this.examRepository.findOne(examId);
+        Participant participant = this.participantRepository.findByExamens(examens);
+        if(participant!= null){
+            return participant.getParticipants().contains(this.authenticationFacade.getUser());
+        }
         return false;
     }
 }

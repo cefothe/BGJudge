@@ -18,18 +18,20 @@ import java.util.Map;
 public class ExamInterceptor extends HandlerInterceptorAdapter {
 
     private final ParticipantService participantService;
-    private final AuthenticationFacade authenticationFacade;
 
     @Autowired
-    public ExamInterceptor(ParticipantService participantService, AuthenticationFacade authenticationFacade) {
+    public ExamInterceptor(ParticipantService participantService) {
         this.participantService = participantService;
-        this.authenticationFacade = authenticationFacade;
     }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Map pathVariables = (Map) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         String examId = (String) pathVariables.get("examId");
+        if(participantService.checkParticipantAndExam(Long.valueOf(examId))){
+            return true;
+        }
+        response.sendRedirect("/");
         return false;
     }
 }
