@@ -1,7 +1,7 @@
 package com.cefothe.bgjudge.exam.services;
 
-import com.cefothe.bgjudge.exam.entitities.ExamStatus;
-import com.cefothe.bgjudge.exam.entitities.Examens;
+import com.cefothe.bgjudge.exam.entities.ExamStatus;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.models.binding.CreateExamModel;
 import com.cefothe.bgjudge.exam.models.view.ViewExamDetailsModel;
 import com.cefothe.bgjudge.exam.models.view.ViewExamModel;

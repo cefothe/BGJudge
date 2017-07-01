@@ -1,6 +1,7 @@
 package com.cefothe.bgjudge.submissions.repositories;
 
-import com.cefothe.bgjudge.exam.entitities.Examens;
+import com.cefothe.bgjudge.exam.entities.ExamSecurity;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.submissions.entities.Submission;
 import com.cefothe.bgjudge.submissions.entities.SubmissionStatus;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -59,10 +61,13 @@ public class SubmissionRepositoryTest {
     @Autowired
     private RoleRepository roleRepository;
 
+    private ExamSecurity examSecurity;
+
     @Before
     public void before() {
         Role role = new Role("student");
         saveRepository(roleRepository, role);
+        this.examSecurity = new ExamSecurity("TestPassword", Collections.emptyList());
     }
 
     @Test
@@ -70,7 +75,8 @@ public class SubmissionRepositoryTest {
         User user = createUser(roleRepository.findOne(1L),false);
         saveRepository(userRepository,user);
 
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        ExamSecurity examSecurity = new ExamSecurity("TestPassword", Collections.emptyList());
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
         saveRepository(examRepository, exam);
 
         Task task = new Task("Test", "test");
@@ -93,7 +99,7 @@ public class SubmissionRepositoryTest {
         User user = createUser(roleRepository.findOne(1L),false);
         saveRepository(userRepository,user);
 
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity);
         saveRepository(examRepository, exam);
 
         Task task = new Task("Test", "test");
@@ -115,7 +121,7 @@ public class SubmissionRepositoryTest {
         User user = createUser(roleRepository.findOne(1L),false);
         saveRepository(userRepository,user);
 
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
         saveRepository(examRepository, exam);
 
         Task task = new Task("Test", "test");
@@ -149,7 +155,7 @@ public class SubmissionRepositoryTest {
         User user = createUser(roleRepository.findOne(1L),false);
         saveRepository(userRepository,user);
 
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
         saveRepository(examRepository, exam);
 
         Task task = new Task("Test", "test");
@@ -176,7 +182,7 @@ public class SubmissionRepositoryTest {
         User user = createUser(roleRepository.findOne(1L),false);
         saveRepository(userRepository,user);
 
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
         saveRepository(examRepository, exam);
 
         Task taskFirst = new Task("Test", "test");
@@ -202,7 +208,7 @@ public class SubmissionRepositoryTest {
         User user = createUser(roleRepository.findOne(1L),false);
         saveRepository(userRepository,user);
 
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user );
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
         saveRepository(examRepository, exam);
 
         Task taskFirst = new Task("Test", "test");

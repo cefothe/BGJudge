@@ -1,6 +1,6 @@
 package com.cefothe.bgjudge.exam.models.view;
 
-import com.cefothe.bgjudge.exam.entitities.ExamStatus;
+import com.cefothe.bgjudge.exam.entities.ExamStatus;
 import com.cefothe.bgjudge.tasks.entities.Task;
 import com.cefothe.bgjudge.user.entities.User;
 import lombok.Getter;

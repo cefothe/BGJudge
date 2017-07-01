@@ -17,7 +17,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <h2>News</h2>
                 <table class="table table-hover">
                     <tbody>
@@ -31,28 +31,14 @@
                 </table>
             </div>
 
-            <div class="col-md-4">
-                <h2>Previous contents</h2>
+            <div class="col-md-6">
+                <h2>Contests</h2>
                 <table class="table table-hover">
                     <tbody>
-                    <tr>
+                    <tr th:each="contest : ${homePage.contestModel}">
                         <td class="text-left">
-                            <a href="test">Test data</a>
-                            <p class="text-right">18/12/2016</p>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="col-md-4">
-                <h2>Upcoming contests</h2>
-                <table class="table table-hover">
-                    <tbody>
-                    <tr>
-                        <td class="text-left">
-                            <a href="test">Test data</a>
-                            <p class="text-right">18/12/2016</p>
+                            <a href="test" th:href="${'/exam/'+{contest.examId}+'/login'}" th:text="${contest.title}"></a>
+                            <p class="text-right" th:text="${contest.date}"></p>
                         </td>
                     </tr>
                     </tbody>

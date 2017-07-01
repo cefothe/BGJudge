@@ -1,6 +1,6 @@
 package com.cefothe.bgjudge.tasks.services;
 
-import com.cefothe.bgjudge.exam.entitities.Examens;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.taskparams.entities.TaskParam;
 import com.cefothe.bgjudge.tasks.entities.Task;
@@ -8,7 +8,7 @@ import com.cefothe.bgjudge.tasks.models.binding.CreateTaskModel;
 import com.cefothe.bgjudge.tasks.repositories.TaskRepositories;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
+
 import org.modelmapper.convention.MatchingStrategies;
 import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.cefothe.bgjudge.exam.entitities;
+package com.cefothe.bgjudge.exam.entities;
 
 import com.cefothe.bgjudge.tasks.entities.Task;
 import com.cefothe.bgjudge.user.entities.User;
@@ -9,6 +9,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,11 +54,15 @@ public class Examens  extends BaseEntity{
     @Fetch(FetchMode.SUBSELECT)
     private ExamStatus examStatus = ExamStatus.IN_PROGRESS;
 
-    public Examens(String name, Timestamp examDate, long examLength, User createdBy) {
+    @OneToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private ExamSecurity examSecurity;
+
+    public Examens(String name, Timestamp examDate, long examLength, User createdBy, ExamSecurity examSecurity ) {
         this.name = name;
         this.examDate = examDate;
         this.examLength = examLength;
         this.createdBy = createdBy;
+        this.examSecurity = examSecurity;
         this.examStatus = ExamStatus.IN_PROGRESS;
     }
 
@@ -65,5 +70,11 @@ public class Examens  extends BaseEntity{
         if(task != null){
             this.tasks.add(task);
         }
+    }
+
+    public boolean checkIfExamAvailable(){
+        LocalDateTime current = LocalDateTime.now();
+        LocalDateTime examStart = this.examDate.toLocalDateTime();
+        return current.isAfter(examStart) && current.isBefore(examStart.plusMinutes(this.examLength)) && this.examStatus == ExamStatus.PUBLISHED;
     }
 }
