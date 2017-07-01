@@ -4,6 +4,8 @@ import com.cefothe.bgjudge.exam.entities.ExamSecurity;
 import com.cefothe.bgjudge.exam.entities.ExamStatus;
 import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.models.view.ViewExamDetailsModel;
+import com.cefothe.bgjudge.exam.models.view.ViewExamTasksModel;
+import com.cefothe.bgjudge.exam.models.view.ViewTaskModel;
 import com.cefothe.common.component.AuthenticationFacade;
 
 import com.cefothe.bgjudge.exam.models.binding.CreateExamModel;
@@ -98,5 +100,15 @@ public class ExamServiceBean implements ExamService {
     public ViewExamDetailsModel get(Long id) {
         Examens examens = this.examRepository.findOne(id);
         return this.modelMapper.map(examens, ViewExamDetailsModel.class);
+    }
+
+    @Override
+    public ViewExamTasksModel getExamTasks(Long id) {
+        Examens examens = this.examRepository.findOne(id);
+        ArrayList<ViewTaskModel> taskModels = new ArrayList<>();
+        examens.getTasks().stream().forEach(task -> {
+            taskModels.add(this.modelMapper.map(task, ViewTaskModel.class));
+        });
+        return new ViewExamTasksModel(examens.getId(), examens.getName(), taskModels);
     }
 }
