@@ -16,3 +16,29 @@ services:
     restart: always
     ports:
       - "3306:3306"
+  mvc:
+    build:
+      context:.
+    environment:
+      JAR_FILE: mvc.jar
+    volumes:
+      - ./docker/volumes/deployment:/app:ro
+    links:
+      - database:database
+      - rabbitmq:rabbitmq
+    depends_on:
+      - database
+      - rabbitmq
+  worker:
+    build:
+        context:.
+    environment:
+        JAR_FILE: worker.jar
+    volumes:
+     - ./docker/volumes/deployment:/app:ro
+    links:
+     - database:database
+     - rabbitmq:rabbitmq
+    depends_on:
+     - database
+     - rabbitmq
