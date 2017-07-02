@@ -16,6 +16,7 @@ import com.cefothe.bgjudge.workers.entities.Test;
 import com.cefothe.bgjudge.workers.entities.TestResults;
 import com.cefothe.bgjudge.workers.executors.Executor;
 import com.cefothe.bgjudge.workers.executors.ExecutorResult;
+import org.apache.camel.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +58,9 @@ public class StrategyBean implements Strategy {
         this.fileIO = fileIO;
     }
 
-    @Async
+
     @Override
+    @Async
     public Future<Submission> execute(Long submissionId) throws IOException {
         Submission submission = submissionRepository.findOne(submissionId);
         ProgramLanguages programLanguages = ProgramLanguages.JAVA;
@@ -108,6 +110,7 @@ public class StrategyBean implements Strategy {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     private void changeSubmissionStatus(SubmissionStatus submissionStatus, Submission submission) {
         submission.setStatus(submissionStatus);
+        submissionRepository.save(submission);
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
