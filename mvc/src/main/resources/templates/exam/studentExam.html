@@ -15,7 +15,9 @@
                             <div class="form-group">
                                 <label for="java-code" class="col-lg-2 control-label">Name</label>
                                 <div>
-                                    <textarea id="java-code" class="java-code-textarea"></textarea>
+                                    <textarea id="java-code" name="code" class="java-code-textarea"></textarea>
+                                    <input type="hidden" name="examId" th:value="${examTasks.id}">
+                                    <input type="hidden" name="taskId" th:value="${task.id}">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -41,6 +43,16 @@
                 mode: "text/x-java"
             });
         })
+        $(document).ready(function() {
+            $(document).on('submit', '#submision > form', function () {
+                var submisions = $(this).serializeObject();
+                console.log(this);
+                $.postJSON('/api/submission/create', submisions).done(function (data) {
+
+                })
+                return false;
+            });
+        });
 
     </script>
 </main>

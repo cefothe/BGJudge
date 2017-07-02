@@ -21,4 +21,8 @@ public class ViewTaskModel implements Serializable {
     @Getter
     @Setter
     private String description;
+
+    @Getter
+    @Setter
+    private Long id;
 }
