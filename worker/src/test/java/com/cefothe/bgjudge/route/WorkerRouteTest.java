@@ -1,7 +1,8 @@
 package com.cefothe.bgjudge.route;
 
 import com.cefothe.bgjudge.WorkerApplication;
-import com.cefothe.bgjudge.exam.entitities.Examens;
+import com.cefothe.bgjudge.exam.entities.ExamSecurity;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.submissions.entities.Submission;
 import com.cefothe.bgjudge.submissions.entities.SubmissionStatus;
@@ -33,7 +34,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -47,14 +47,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.isEmptyOrNullString;
-import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
 
 /**
@@ -122,7 +119,7 @@ public class WorkerRouteTest {
 
         User user = createUser(roleRepository.findOne(1L),true);
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user);
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
         Task task = new Task("Test", "test");
         TaskParam taskParam = new TaskParam("Hello World", "Hello World");
 
