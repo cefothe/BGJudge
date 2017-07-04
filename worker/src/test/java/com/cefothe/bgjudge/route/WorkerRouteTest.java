@@ -23,6 +23,7 @@ import com.cefothe.common.entities.BaseEntity;
 import org.apache.camel.CamelContext;
 import org.apache.camel.builder.DefaultFluentProducerTemplate;
 import org.apache.camel.builder.NotifyBuilder;
+import org.assertj.core.internal.Longs;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -41,12 +42,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -128,7 +129,14 @@ public class WorkerRouteTest {
         saveRepository(examRepository, exam);
         Submission submission = createSubmision(user, exam, task, true);
 
-        new DefaultFluentProducerTemplate(camelContext).to("direct:start").withBody(submission.getId()).send();
+
+        ByteArrayOutputStream fileOut = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(submission.getId());
+
+        String value = Base64.getEncoder().encodeToString(String.valueOf(submission.getId()).getBytes());
+
+        new DefaultFluentProducerTemplate(camelContext).to("direct:start").withBody(new ByteArrayInputStream(fileOut.toByteArray())).send();
         boolean matches = notify.matches(30, TimeUnit.SECONDS);
         // true means the notifier condition matched (= 1 message is done)
         assertThat(matches, Matchers.is(true));

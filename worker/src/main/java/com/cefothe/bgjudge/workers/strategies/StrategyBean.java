@@ -82,7 +82,6 @@ public class StrategyBean implements Strategy {
         scoreCalculation.calculation(submission);
 
         changeSubmissionStatus(SubmissionStatus.COMPLETED,submission);
-        save(submission);
         fileIO.deleteDirectory(file);
         return new AsyncResult<>(submission);
     }
@@ -110,11 +109,6 @@ public class StrategyBean implements Strategy {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     private void changeSubmissionStatus(SubmissionStatus submissionStatus, Submission submission) {
         submission.setStatus(submissionStatus);
-        submissionRepository.save(submission);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    private void save(Submission submission){
         submissionRepository.save(submission);
     }
 
