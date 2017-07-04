@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>worker</name>
-	<description>This project compile and excetute code and save result for tests</description>
+	<description>This project compile and execute code and save result for tests</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

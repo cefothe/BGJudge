@@ -15,9 +15,11 @@ public class TitleInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        String title = "BGJudge - " + modelAndView.getModelMap().get("title");
-        if(modelAndView.getModelMap().get("title") != null) {
-            modelAndView.addObject("title", title);
+        if (modelAndView != null && modelAndView.getModel() != null) {
+            String title = "BGJudge - " + modelAndView.getModelMap().get("title");
+            if (modelAndView.getModelMap().get("title") != null) {
+                modelAndView.addObject("title", title);
+            }
         }
     }
 }

@@ -1,7 +1,8 @@
 package com.cefothe.bgjudge.workers;
 
 import com.cefothe.bgjudge.WorkerApplication;
-import com.cefothe.bgjudge.exam.entitities.Examens;
+import com.cefothe.bgjudge.exam.entities.ExamSecurity;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.submissions.entities.Submission;
 import com.cefothe.bgjudge.submissions.entities.SubmissionStatus;
@@ -38,6 +39,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.Future;
 
@@ -100,7 +102,7 @@ public class StrategyBeanTest {
         User user = createUser(roleRepository.findOne(1L),true);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user);
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
         Task task = new Task("Test", "test");
         TaskParam taskParam = new TaskParam("Hello World", "Hello World");
 
@@ -128,7 +130,7 @@ public class StrategyBeanTest {
         User user = createUser(roleRepository.findOne(1L),true);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user);
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
         Task task = new Task("Test", "test");
         TaskParam taskParam = new TaskParam("Hello World", "Hello World");
         TaskParam taskParamSecond = new TaskParam("Hello Stefan", "Hello Ivan");
