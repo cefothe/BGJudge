@@ -2,7 +2,11 @@
 
 <main class="col-4 offset-4 text-center">
     <div class="container">
-        <div id="tabs">
+        <div class="row">
+           <div class="col-md-12 text-left"> <h1 th:text="${examTasks.name}"></h1></div>
+        </div>
+        <div class="row">
+            <div id="tabs">
             <ul>
                 <li th:each="task, iter: ${examTasks.tasks}"><a th:href="@{'#tabs-'+${iter.index}}" th:text="${task.title}"></a></li>
             </ul>
@@ -13,7 +17,7 @@
                         <fieldset>
                             <legend>Create exam</legend>
                             <div class="form-group">
-                                <label for="java-code" class="col-lg-2 control-label">Name</label>
+                                <label for="java-code" class="col-lg-2 control-label">Code</label>
                                 <div>
                                     <textarea id="java-code" name="code" class="java-code-textarea"></textarea>
                                     <input type="hidden" name="examId" th:value="${examTasks.id}">
@@ -28,13 +32,34 @@
                         </fieldset>
                     </form>
                 </div>
+                <div class="well bs-componet">
+                    <div class="col-lg-6">
+                        <a class="btn btn-primary submit" th:href="@{/exam/{examId}/tasks(examId=${examTasks.id})}">Refresh results</a>
+                    </div>
+                    <table class="table table-striped table-hover" id="userTable">
+                        <thead>
+                        <tr>
+                            <th>Submission status</th>
+                            <th>Result</th>
+                        </tr>
+                        </thead>
+                        <tbody class="text-left">
+                            <tr th:each="result : ${task.submissionResults}">
+                                <td th:text="${result.submissionStatus}"></td>
+                                <td th:text="${result.result}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
         </div>
     </div>
     <script>
         $(function() {
             $("#tabs").tabs();
         });
+
         var textEditor = document.getElementsByClassName("java-code-textarea");
         Array.prototype.forEach.call(textEditor, function (element) {
             var javaEditor = CodeMirror.fromTextArea(element, {
@@ -52,7 +77,11 @@
                 })
                 return false;
             });
+            $('.datatables').on('change', function () {
+
+            })
         });
+
 
     </script>
 </main>
