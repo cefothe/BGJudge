@@ -45,7 +45,7 @@ public class Examens  extends BaseEntity{
 
     @Getter
     @Setter
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private User createdBy;
 
     @Getter

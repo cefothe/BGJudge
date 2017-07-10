@@ -8,8 +8,8 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 ENV JAR_FILE=app.jar
 ENV DEBUG_MICROSERVICE=false
 
-# Set timezone to UTC
-RUN echo UTC > /etc/timezone
+# Set timezone to Europe/Sofia
+RUN echo Europe/Sofia > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 
 COPY ./docker/scripts/docker-entrypoint.sh /

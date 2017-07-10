@@ -6,6 +6,8 @@ import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.participants.entities.Participant;
 import com.cefothe.bgjudge.participants.repositories.ParticipantRepository;
 import com.cefothe.common.component.AuthenticationFacade;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ParticipantServiceBean implements ParticipantService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ParticipantServiceBean.class);
 
     private final AuthenticationFacade authenticationFacade;
     private final ParticipantRepository participantRepository;
@@ -29,6 +33,7 @@ public class ParticipantServiceBean implements ParticipantService {
     @Override
     public boolean addParticipantIntoExam(Long examId, LoginIntoExamModel loginIntoExamModel) {
         Examens exam = examRepository.findOne(examId);
+
         if(exam == null) {
             return false;
         }
