@@ -16,17 +16,12 @@ import com.cefothe.bgjudge.workers.entities.Test;
 import com.cefothe.bgjudge.workers.entities.TestResults;
 import com.cefothe.bgjudge.workers.executors.Executor;
 import com.cefothe.bgjudge.workers.executors.ExecutorResult;
-import org.apache.camel.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -106,7 +101,6 @@ public class StrategyBean implements Strategy {
         return executor.execute(file, executorResult);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     private void changeSubmissionStatus(SubmissionStatus submissionStatus, Submission submission) {
         submission.setStatus(submissionStatus);
         submissionRepository.save(submission);
