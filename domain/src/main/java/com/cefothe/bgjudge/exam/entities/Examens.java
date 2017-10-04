@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by cefothe on 04.05.17.
@@ -45,7 +46,7 @@ public class Examens  extends BaseEntity{
 
     @Getter
     @Setter
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private User createdBy;
 
     @Getter
@@ -69,6 +70,7 @@ public class Examens  extends BaseEntity{
     public void addTask(Task task){
         if(task != null){
             this.tasks.add(task);
+
         }
     }
 
