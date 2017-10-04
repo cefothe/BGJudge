@@ -1,6 +1,7 @@
 package com.cefothe.bgjudge.exam.controller;
 
 import com.cefothe.bgjudge.exam.models.binding.LoginIntoExamModel;
+import com.cefothe.bgjudge.exam.services.ExamService;
 import com.cefothe.bgjudge.exam.services.participant.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,10 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class StudentExamController {
 
     private ParticipantService participantService;
+    private ExamService examService;
 
     @Autowired
-    public StudentExamController(ParticipantService participantService) {
+    public StudentExamController(ParticipantService participantService, ExamService examService) {
         this.participantService = participantService;
+        this.examService = examService;
     }
 
     @GetMapping("/{examId}/login")
@@ -44,6 +47,7 @@ public class StudentExamController {
     @GetMapping("/{examId}/tasks")
     public String tasks(@PathVariable("examId") Long examId, Model model){
         model.addAttribute("title", "Exam view");
+        model.addAttribute("examTasks",examService.getExamTasks(examId));
         model.addAttribute("view","exam/studentExam");
         return "base-layout";
     }
