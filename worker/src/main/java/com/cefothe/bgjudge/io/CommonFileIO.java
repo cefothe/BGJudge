@@ -1,6 +1,5 @@
 package com.cefothe.bgjudge.io;
 
-import com.cefothe.bgjudge.workers.strategies.StrategyBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
