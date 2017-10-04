@@ -19,12 +19,9 @@ import com.cefothe.bgjudge.workers.executors.ExecutorResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,8 +54,9 @@ public class StrategyBean implements Strategy {
         this.fileIO = fileIO;
     }
 
-    @Async
+
     @Override
+    @Async
     public Future<Submission> execute(Long submissionId) throws IOException {
         Submission submission = submissionRepository.findOne(submissionId);
         ProgramLanguages programLanguages = ProgramLanguages.JAVA;
@@ -80,7 +78,6 @@ public class StrategyBean implements Strategy {
         scoreCalculation.calculation(submission);
 
         changeSubmissionStatus(SubmissionStatus.COMPLETED,submission);
-        save(submission);
         fileIO.deleteDirectory(file);
         return new AsyncResult<>(submission);
     }
@@ -105,13 +102,8 @@ public class StrategyBean implements Strategy {
         return executor.execute(file, executorResult);
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
     private void changeSubmissionStatus(SubmissionStatus submissionStatus, Submission submission) {
         submission.setStatus(submissionStatus);
-    }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    private void save(Submission submission){
         submissionRepository.save(submission);
     }
 

@@ -26,6 +26,7 @@ public class WorkerRoute extends RouteBuilder {
     public void configure() throws Exception {
         from(workerEndpoint)
                 .routeId("work-route")
+                .unmarshal().serialization()
                 .bean(strategy);
     }
 }

@@ -17,4 +17,12 @@ public class SubmissionTO implements Serializable {
     @Getter
     @Setter
     public String code;
+
+    @Getter
+    @Setter
+    public Long examId;
+
+    @Getter
+    @Setter
+    public Long taskId;
 }

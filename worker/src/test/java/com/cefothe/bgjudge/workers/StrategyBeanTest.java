@@ -1,7 +1,8 @@
 package com.cefothe.bgjudge.workers;
 
 import com.cefothe.bgjudge.WorkerApplication;
-import com.cefothe.bgjudge.exam.entitities.Examens;
+import com.cefothe.bgjudge.exam.entities.ExamSecurity;
+import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.submissions.entities.Submission;
 import com.cefothe.bgjudge.submissions.entities.SubmissionStatus;
@@ -25,7 +26,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -38,6 +42,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.Future;
 
@@ -52,6 +57,7 @@ import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnec
 @TestPropertySource(locations = "classpath:application-unittest.properties")
 @ContextConfiguration(classes = WorkerApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@ActiveProfiles(profiles = "non-async")
 @AutoConfigureTestDatabase(connection = H2)
 public class StrategyBeanTest {
 
@@ -77,6 +83,12 @@ public class StrategyBeanTest {
     @Autowired
     public Strategy strategy;
 
+    @Configuration
+    @Profile("non-async")
+    public static class Config{
+
+    }
+
     @Before
     public void before() {
         Role role = new Role("student");
@@ -100,7 +112,7 @@ public class StrategyBeanTest {
         User user = createUser(roleRepository.findOne(1L),true);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user);
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
         Task task = new Task("Test", "test");
         TaskParam taskParam = new TaskParam("Hello World", "Hello World");
 
@@ -128,7 +140,7 @@ public class StrategyBeanTest {
         User user = createUser(roleRepository.findOne(1L),true);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
-        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user);
+        Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
         Task task = new Task("Test", "test");
         TaskParam taskParam = new TaskParam("Hello World", "Hello World");
         TaskParam taskParamSecond = new TaskParam("Hello Stefan", "Hello Ivan");

@@ -5,6 +5,7 @@ import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.models.binding.CreateExamModel;
 import com.cefothe.bgjudge.exam.models.view.ViewExamDetailsModel;
 import com.cefothe.bgjudge.exam.models.view.ViewExamModel;
+import com.cefothe.bgjudge.exam.models.view.ViewExamTasksModel;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface ExamService {
     void changeStatus(ExamStatus examStatus, Long examId);
     List<ViewExamModel> getAllExams();
     ViewExamDetailsModel get(Long id);
+    ViewExamTasksModel getExamTasks(Long id);
 }

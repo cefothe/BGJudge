@@ -226,9 +226,15 @@ public class SubmissionRepositoryTest {
         //Third submission
         createSubmission(user, exam, taskSecond, 50, submissionRepository);
 
+        User secondUser = createUser("Ivan", roleRepository.findOne(1L));
+        saveRepository(userRepository,secondUser);
+        //Third submission
+        createSubmission(secondUser, exam, taskSecond, 50, submissionRepository);
+
+
         List<Submission> foundSubmissions =submissionRepository.findSubmissionForExamMaxScore(exam);
 
-        assertThat(foundSubmissions, hasSize(2));
+        assertThat(foundSubmissions, hasSize(3));
 
     }
 
