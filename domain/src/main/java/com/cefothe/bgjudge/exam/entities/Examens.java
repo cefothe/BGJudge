@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * Created by cefothe on 04.05.17.
@@ -55,6 +54,7 @@ public class Examens  extends BaseEntity{
     @Fetch(FetchMode.SUBSELECT)
     private ExamStatus examStatus = ExamStatus.IN_PROGRESS;
 
+    @Getter
     @OneToOne(optional = false, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private ExamSecurity examSecurity;
 
