@@ -37,8 +37,7 @@ public class ParticipantServiceBean implements ParticipantService {
         if(exam == null) {
             return false;
         }
-        boolean checkIfExamAvaible = exam.checkIfExamAvailable();
-        if(!checkIfExamAvaible){
+        if(!exam.checkIfExamAvailable() && !exam.getExamSecurity().checkForCorrectPassword(loginIntoExamModel.getExamPassword()) ){
             return false;
         }else{
             Participant participant = participantRepository.findByExamens(exam);
@@ -56,9 +55,6 @@ public class ParticipantServiceBean implements ParticipantService {
     public boolean checkParticipantAndExam(Long examId) {
         Examens examens = this.examRepository.findOne(examId);
         Participant participant = this.participantRepository.findByExamens(examens);
-        if(participant!= null){
-            return participant.getParticipants().contains(this.authenticationFacade.getUser()) && examens.checkIfExamAvailable();
-        }
-        return false;
+        return participant != null && participant.getParticipants().contains(this.authenticationFacade.getUser()) && examens.checkIfExamAvailable();
     }
 }

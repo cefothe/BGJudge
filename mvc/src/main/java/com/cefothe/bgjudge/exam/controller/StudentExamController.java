@@ -38,7 +38,7 @@ public class StudentExamController {
 
     @PostMapping("/{examId}/login")
     public String logIntoExam(@PathVariable("examId") Long examId, LoginIntoExamModel loginIntoExamModel){
-        if(participantService.addParticipantIntoExam(examId,loginIntoExamModel)){
+            if(participantService.addParticipantIntoExam(examId,loginIntoExamModel)){
             return "redirect:/exam/"+examId+"/tasks";
         }
         return "redirect:/exam/"+examId+"/login";
