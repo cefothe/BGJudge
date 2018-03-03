@@ -128,12 +128,12 @@ public class SubmissionRepositoryTest {
         saveRepository(taskRepositories,task);
 
         //First submission
-        User firstUser = createUser("Stefan", roleRepository.findOne(1L));
+        User firstUser = createUser("Stefan", roleRepository.findOne(1L), "stefan@gmail.com");
         saveRepository(userRepository,firstUser);
         Submission firstSubmission = createSubmission(firstUser, exam, task, 100, submissionRepository);
 
         //Second submission
-        User secondUser = createUser("Ivan", roleRepository.findOne(1L));
+        User secondUser = createUser("Ivan", roleRepository.findOne(1L), "ivan@gmail.com");
         saveRepository(userRepository,secondUser);
         Submission secondSubmission = createSubmission(secondUser, exam, task, 50, submissionRepository);
 
@@ -162,12 +162,12 @@ public class SubmissionRepositoryTest {
         saveRepository(taskRepositories,task);
 
         //First submission
-        User firstUser = createUser("Stefan", roleRepository.findOne(1L));
+        User firstUser = createUser("Stefan", roleRepository.findOne(1L), "stefan@gmail.com");
         saveRepository(userRepository,firstUser);
         createSubmission(firstUser, exam, task, 100, submissionRepository);
 
         //Second submission
-        User secondUser = createUser("Ivan", roleRepository.findOne(1L));
+        User secondUser = createUser("Ivan", roleRepository.findOne(1L) , "ivan@gmail.com");
         saveRepository(userRepository,secondUser);
         createSubmission(secondUser, exam, task, 50, submissionRepository);
 
@@ -226,7 +226,7 @@ public class SubmissionRepositoryTest {
         //Third submission
         createSubmission(user, exam, taskSecond, 50, submissionRepository);
 
-        User secondUser = createUser("Ivan", roleRepository.findOne(1L));
+        User secondUser = createUser("Ivan", roleRepository.findOne(1L), "ivan@gmail.com");
         saveRepository(userRepository,secondUser);
         //Third submission
         createSubmission(secondUser, exam, taskSecond, 50, submissionRepository);
@@ -238,8 +238,13 @@ public class SubmissionRepositoryTest {
 
     }
 
-    public User createUser(String username, Role role) {
-        User user = new User(username, "test", new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"), role);
+
+    private User createUser(String username, Role role){
+        return createUser(username,role, "cefothe@gmail.com");
+    }
+
+    private User createUser(String username, Role role, String mail) {
+        User user = new User(username, "test", new UserInformation("Stefan", "Angelov", mail), role);
         return user;
     }
 
@@ -252,7 +257,7 @@ public class SubmissionRepositoryTest {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    private void saveRepository(CrudRepository repository, BaseEntity baseEntity){
+    public void saveRepository(CrudRepository repository, BaseEntity baseEntity){
         repository.save(baseEntity);
     }
 
