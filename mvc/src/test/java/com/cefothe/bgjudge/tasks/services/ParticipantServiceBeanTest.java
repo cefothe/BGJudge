@@ -8,6 +8,7 @@ import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.exam.services.participant.ParticipantServiceBean;
 import com.cefothe.bgjudge.user.entities.Role;
 import com.cefothe.bgjudge.user.entities.User;
+import com.cefothe.bgjudge.user.entities.UserInformation;
 import com.cefothe.bgjudge.user.repositories.RoleRepository;
 import com.cefothe.bgjudge.user.repositories.UserRepository;
 import com.cefothe.common.component.AuthenticationFacade;
@@ -60,7 +61,7 @@ public class ParticipantServiceBeanTest {
         Role role = new Role("teacher");
         roleRepository.save(role);
 
-        User user = new User("Stefan", "password",null, role);
+        User user = new User("Stefan", "password",new UserInformation("Stefan", "Angelov","cefothe@gmail.com"), role);
         userRepository.save(user);
 
         this.examSecurity = new ExamSecurity("TestPassword", Collections.emptyList());

@@ -96,7 +96,7 @@ public class StrategyBeanTest {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    private void saveRepository(CrudRepository repository, BaseEntity baseEntity) {
+    public void saveRepository(CrudRepository repository, BaseEntity baseEntity) {
         repository.save(baseEntity);
     }
 
