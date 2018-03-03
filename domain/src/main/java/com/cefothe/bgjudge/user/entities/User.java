@@ -19,6 +19,7 @@ import java.util.Set;
 public class User extends BaseEntity implements UserDetails {
 
     @Getter
+    @Column(unique = true, nullable = false)
     private String username;
 
     @Getter

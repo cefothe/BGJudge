@@ -2,6 +2,7 @@ package com.cefothe.bgjudge.user.entities;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
@@ -22,6 +23,7 @@ public class UserInformation implements Serializable {
     private String lastName;
 
     @Getter
+    @Column(unique = true, nullable = false)
     private String email;
 
     public UserInformation(UserInformation userInformation){
