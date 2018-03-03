@@ -13,7 +13,7 @@
                         <input type="text" th:field="*{firstName}" pattern="^[a-zA-Z -.]+$" class="form-control"
                                th:classappend="${#fields.hasErrors('firstName') ? 'form-control-danger' : _}"
                                placeholder="First name"/>
-                        <div class="form-control-feedback" th:each="error : ${#fields.errors('firstName')}"
+                        <div class="alert alert-danger" th:each="error : ${#fields.errors('firstName')}"
                              th:text="${error}">Error Message
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                         <input type="text" th:field="*{lastName}" pattern="^[a-zA-Z -.]+$" class="form-control"
                                th:classappend="${#fields.hasErrors('lastName') ? 'form-control-danger' : _}"
                                placeholder="Last name"/>
-                        <div class="form-control-feedback" th:each="error : ${#fields.errors('lastName')}"
+                        <div class="alert alert-danger" th:each="error : ${#fields.errors('lastName')}"
                              th:text="${error}">Error Message
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                         <input type="text" th:field="*{username}" pattern="^[a-zA-Z -.]+$" class="form-control"
                                th:classappend="${#fields.hasErrors('username') ? 'form-control-danger' : _}"
                                placeholder="User name"/>
-                        <div class="form-control-feedback" th:each="error : ${#fields.errors('username')}"
+                        <div class="alert alert-danger" th:each="error : ${#fields.errors('username')}"
                              th:text="${error}">Error Message
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                         <input type="email" th:field="*{email}" class="form-control"
                                th:classappend="${#fields.hasErrors('email') ? 'form-control-danger' : _}"
                                placeholder="somebody@example.com"/>
-                        <div class="form-control-feedback" th:each="error : ${#fields.errors('email')}"
+                        <div class="alert alert-danger" th:each="error : ${#fields.errors('email')}"
                              th:text="${error}">Error Message
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                                class="form-control"
                                th:classappend="${#fields.hasErrors('password') ? 'form-control-danger' : _}"
                                placeholder="Password"/>
-                        <div class="form-control-feedback" th:each="error : ${#fields.errors('password')}"
+                        <div class="alert alert-danger" th:each="error : ${#fields.errors('password')}"
                              th:text="${error}">Error Message
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}"
                                th:classappend="${#fields.hasErrors('confirmPassword') ? 'form-control-danger' : _}"
                                class="form-control" placeholder="Confirm Password"/>
-                        <div class="form-control-feedback" th:each="error : ${#fields.errors('confirmPassword')}"
+                        <div class="alert alert-danger" th:each="error : ${#fields.errors('confirmPassword')}"
                              th:text="${error}">Error Message
                         </div>
                     </div>

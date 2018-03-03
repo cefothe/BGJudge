@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 
 /**
  * Created by cefothe on 02.05.17.
@@ -48,7 +50,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerProcess(RegisterUserModel registerUserModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String registerProcess(@Valid  RegisterUserModel registerUserModel, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userRegistrationModel", registerUserModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userRegistrationModel", bindingResult);
