@@ -99,6 +99,7 @@ public class StrategyBeanTest {
 
     @After
     public void after(){
+        examRepository.deleteAll();
         userRepository.deleteAll();
     }
 

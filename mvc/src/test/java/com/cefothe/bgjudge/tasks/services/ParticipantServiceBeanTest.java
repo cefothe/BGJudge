@@ -78,6 +78,7 @@ public class ParticipantServiceBeanTest {
 
     @After
     public void after(){
+        examRepository.deleteAll();
         userRepository.deleteAll();
     }
 
