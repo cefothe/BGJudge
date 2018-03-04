@@ -6,6 +6,7 @@ import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.models.binding.LoginIntoExamModel;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
 import com.cefothe.bgjudge.exam.services.participant.ParticipantServiceBean;
+import com.cefothe.bgjudge.participants.repositories.ParticipantRepository;
 import com.cefothe.bgjudge.user.entities.Role;
 import com.cefothe.bgjudge.user.entities.User;
 import com.cefothe.bgjudge.user.entities.UserInformation;
@@ -52,6 +53,9 @@ public class ParticipantServiceBeanTest {
     @Autowired
     private ParticipantServiceBean participantServiceBean;
 
+    @Autowired
+    private ParticipantRepository participantRepository;
+
     @MockBean
     private AuthenticationFacade authenticationFacade;
 
@@ -78,8 +82,10 @@ public class ParticipantServiceBeanTest {
 
     @After
     public void after(){
+        participantRepository.deleteAll();
         examRepository.deleteAll();
         userRepository.deleteAll();
+
     }
 
     @Test
