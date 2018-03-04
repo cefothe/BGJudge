@@ -12,6 +12,7 @@ import com.cefothe.bgjudge.user.entities.UserInformation;
 import com.cefothe.bgjudge.user.repositories.RoleRepository;
 import com.cefothe.bgjudge.user.repositories.UserRepository;
 import com.cefothe.common.component.AuthenticationFacade;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,6 +74,11 @@ public class ParticipantServiceBeanTest {
 
         when(authenticationFacade.getUser()).thenReturn(user);
 
+    }
+
+    @After
+    public void after(){
+        userRepository.deleteAll();
     }
 
     @Test

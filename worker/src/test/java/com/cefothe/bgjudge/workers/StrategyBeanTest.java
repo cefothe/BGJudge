@@ -97,6 +97,11 @@ public class StrategyBeanTest {
         saveRepository(roleRepository, role);
     }
 
+    @After
+    public void after(){
+        userRepository.deleteAll();
+    }
+
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveRepository(CrudRepository repository, BaseEntity baseEntity) {
         repository.save(baseEntity);
