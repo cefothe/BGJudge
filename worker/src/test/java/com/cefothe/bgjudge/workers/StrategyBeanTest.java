@@ -99,9 +99,10 @@ public class StrategyBeanTest {
 
     @After
     public void after(){
+        submissionRepository.deleteAll();
         examRepository.deleteAll();
         userRepository.deleteAll();
-        submissionRepository.deleteAll();
+
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
