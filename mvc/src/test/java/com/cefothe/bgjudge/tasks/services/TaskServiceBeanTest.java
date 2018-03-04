@@ -10,6 +10,7 @@ import com.cefothe.bgjudge.tasks.models.binding.CreateTaskModel;
 import com.cefothe.bgjudge.tasks.repositories.TaskRepositories;
 import com.cefothe.bgjudge.user.entities.Role;
 import com.cefothe.bgjudge.user.entities.User;
+import com.cefothe.bgjudge.user.entities.UserInformation;
 import com.cefothe.bgjudge.user.repositories.RoleRepository;
 import com.cefothe.bgjudge.user.repositories.UserRepository;
 import org.junit.Before;
@@ -64,7 +65,7 @@ public class TaskServiceBeanTest {
         // Expected
         Role role = new Role("teacher");
         roleRepository.save(role);
-        User user = new User("Stefan", "password",null, role);
+        User user = new User("Stefan", "password",new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"), role);
         userRepository.save(user);
 
         Examens examens = new Examens("Java Exam", new Timestamp(new Date().getTime()),120, user, this.examSecurity);
