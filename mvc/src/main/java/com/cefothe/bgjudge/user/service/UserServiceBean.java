@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by cefothe on 02.05.17.
+ * {@inheritDoc}
  */
 @Service
 @Transactional
@@ -30,6 +30,9 @@ public class UserServiceBean implements UserService {
         this.roleService = roleService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
@@ -39,6 +42,9 @@ public class UserServiceBean implements UserService {
         return user ;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void register(RegisterUserModel registerUserModel) {
         // TODO : register use model mapper
@@ -48,5 +54,13 @@ public class UserServiceBean implements UserService {
         User user = new User(registerUserModel.getUsername(),encodePassword,userInformation,userRole);
 
         this.userRepository.save(user);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean checkForUniqueEmail(String email) {
+        return userRepository.existsByUserInformationEmail(email);
     }
 }

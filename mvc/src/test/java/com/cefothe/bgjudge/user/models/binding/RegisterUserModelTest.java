@@ -1,6 +1,12 @@
 package com.cefothe.bgjudge.user.models.binding;
 
 import com.cefothe.MvcApplication;
+import com.cefothe.bgjudge.user.entities.Role;
+import com.cefothe.bgjudge.user.entities.User;
+import com.cefothe.bgjudge.user.entities.UserInformation;
+import com.cefothe.bgjudge.user.repositories.RoleRepository;
+import com.cefothe.bgjudge.user.repositories.UserRepository;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +28,20 @@ import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnec
 @AutoConfigureTestDatabase(connection = H2)
 public class RegisterUserModelTest {
 
+    @Autowired
+    private RoleRepository roleRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private Validator validator;
+
+    @After
+    public void after(){
+        userRepository.deleteAll();
+        roleRepository.deleteAll();
+    }
 
     @Test
     public void testCreationOnUserWithNowMatchPassword(){
@@ -46,5 +63,39 @@ public class RegisterUserModelTest {
 
         // Verify
         assertEquals(0, violations.size());
+    }
+
+    @Test
+    public void testUniqueUsername(){
+        //Expected
+        Role role = new Role("teacher");
+        roleRepository.save(role);
+        User user = new User("cefothe", "password",new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"), role);
+        userRepository.save(user);
+
+        // When
+        RegisterUserModel registerUserModel = new RegisterUserModel("cefothe","02135822","02135822","Stefan","Angelov","cefothe1@gmail.com");
+        Set<ConstraintViolation<RegisterUserModel>> violations = validator.validate(registerUserModel);
+
+        //Verify
+        assertEquals(1, violations.size());
+
+    }
+
+    @Test
+    public void testUniqueEmail(){
+        //Expected
+        Role role = new Role("teacher");
+        roleRepository.save(role);
+        User user = new User("stefan", "password",new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"), role);
+        userRepository.save(user);
+
+        // When
+        RegisterUserModel registerUserModel = new RegisterUserModel("cefothe","02135822","02135822","Stefan","Angelov","cefothe@gmail.com");
+        Set<ConstraintViolation<RegisterUserModel>> violations = validator.validate(registerUserModel);
+
+        //Verify
+        assertEquals(1, violations.size());
+
     }
 }

@@ -1,6 +1,8 @@
 package com.cefothe.bgjudge.user.models.binding;
 
 import com.cefothe.bgjudge.user.validation.password.PasswordMatch;
+import com.cefothe.bgjudge.user.validation.unique.UniqueEmail;
+import com.cefothe.bgjudge.user.validation.unique.UniqueUsername;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ public class RegisterUserModel implements Serializable {
     @Setter
     @NotNull
     @Size(min = 6, max = 20)
+    @UniqueUsername
     private String username;
 
     @Getter
@@ -52,5 +55,6 @@ public class RegisterUserModel implements Serializable {
     @Setter
     @NotNull
     @Email
+    @UniqueEmail
     private String email;
 }
