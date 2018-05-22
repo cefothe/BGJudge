@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -27,7 +28,8 @@ import java.util.Collections;
 import java.util.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
 /**
  * Created by Stefan Angelov - Delta Source Bulgaria on 6/16/17.
@@ -36,6 +38,7 @@ import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnec
 @ContextConfiguration(classes = MvcApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @AutoConfigureTestDatabase(connection = H2)
+@DirtiesContext
 public class TaskServiceBeanTest {
 
     @Autowired

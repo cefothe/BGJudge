@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 /**
  * Created by cefothe on 04.05.17.
  */
@@ -39,7 +41,12 @@ public class ExamController {
     }
 
     @PostMapping("create")
-    public String createExam(CreateExamModel createExamModel, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String createExam(@Valid CreateExamModel createExamModel, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("createExamModel", createExamModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createExamModel", bindingResult);
+            return "redirect:/create";
+        }
         examService.create(createExamModel);
         return "redirect:/exam/all";
     }

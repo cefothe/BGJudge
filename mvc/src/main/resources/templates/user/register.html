@@ -14,7 +14,7 @@
                                th:classappend="${#fields.hasErrors('firstName') ? 'form-control-danger' : _}"
                                placeholder="First name"/>
                         <div class="alert alert-danger" th:each="error : ${#fields.errors('firstName')}"
-                             th:text="${error}">Error Message
+                             th:text="${error}">
                         </div>
                     </div>
 
@@ -24,7 +24,7 @@
                                th:classappend="${#fields.hasErrors('lastName') ? 'form-control-danger' : _}"
                                placeholder="Last name"/>
                         <div class="alert alert-danger" th:each="error : ${#fields.errors('lastName')}"
-                             th:text="${error}">Error Message
+                             th:text="${error}">
                         </div>
                     </div>
 
@@ -34,7 +34,7 @@
                                th:classappend="${#fields.hasErrors('username') ? 'form-control-danger' : _}"
                                placeholder="User name"/>
                         <div class="alert alert-danger" th:each="error : ${#fields.errors('username')}"
-                             th:text="${error}">Error Message
+                             th:text="${error}">
                         </div>
                     </div>
 
@@ -44,7 +44,7 @@
                                th:classappend="${#fields.hasErrors('email') ? 'form-control-danger' : _}"
                                placeholder="somebody@example.com"/>
                         <div class="alert alert-danger" th:each="error : ${#fields.errors('email')}"
-                             th:text="${error}">Error Message
+                             th:text="${error}">
                         </div>
                     </div>
 
@@ -56,7 +56,7 @@
                                th:classappend="${#fields.hasErrors('password') ? 'form-control-danger' : _}"
                                placeholder="Password"/>
                         <div class="alert alert-danger" th:each="error : ${#fields.errors('password')}"
-                             th:text="${error}">Error Message
+                             th:text="${error}">
                         </div>
                     </div>
 
@@ -68,7 +68,7 @@
                                th:classappend="${#fields.hasErrors('confirmPassword') ? 'form-control-danger' : _}"
                                class="form-control" placeholder="Confirm Password"/>
                         <div class="alert alert-danger" th:each="error : ${#fields.errors('confirmPassword')}"
-                             th:text="${error}">Error Message
+                             th:text="${error}">
                         </div>
                     </div>
 

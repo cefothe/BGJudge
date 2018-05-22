@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <main class="col-4 offset-4 text-center">
     <div class="container">
@@ -8,34 +8,50 @@
                     <form th:action="@{/exam/create}" method="post" class="form-horizontal" th:object="${createExamModel}">
                         <fieldset>
                             <legend>Create exam</legend>
-                            <div class="form-group">
+                            <div class="form-group"  th:classappend="${#fields.hasErrors('name') ? 'has-danger' : _}">
                                 <label for="name" class="col-lg-4 control-label">Name</label>
                                 <div class="col-lg-8">
                                     <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Exam name">
                                 </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('name')}"
+                                     th:text="${error}">
+                                </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('examDate') ? 'has-danger' : _}">
                                 <label for="examDate" class="col-lg-4 control-label">Exam date</label>
                                 <div class="col-lg-8">
                                     <input type="datetime-local" th:field="*{examDate}" class="form-control" id="examDate" placeholder="Exam Date">
                                 </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('examDate')}"
+                                     th:text="${error}">
+                                </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group"  th:classappend="${#fields.hasErrors('examLength') ? 'has-danger' : _}">
                                 <label for="examLength" class="col-lg-4 control-label">Exam length</label>
                                 <div class="col-lg-8">
                                     <input type="text" th:field="*{examLength}" class="form-control" id="examLength" placeholder="Exam length">
                                 </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('examLength')}"
+                                     th:text="${error}">
+                                </div>
+
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('examPassword') ? 'has-danger' : _}">
                                 <label for="examLength" class="col-lg-4 control-label">Exam password</label>
                                 <div class="col-lg-8">
-                                    <input type="text" th:field="*{examPassword}" class="form-control" id="examLength" placeholder="Exam password">
+                                    <input type="text" th:field="*{examPassword}" class="form-control" id="examPassword" placeholder="Exam password">
+                                </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('examPassword')}"
+                                     th:text="${error}">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" th:classappend="${#fields.hasErrors('allowedIP') ? 'has-danger' : _}">
                                 <label for="examLength" class="col-lg-4 control-label">Allowed IP</label>
                                 <div class="col-lg-8">
-                                    <input type="text" th:field="*{allowedIP}" class="form-control" id="examLength" placeholder="Allowed IP">
+                                    <input type="text" th:field="*{allowedIP}" class="form-control" id="allowedIP" placeholder="Allowed IP">
+                                </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('allowedIP')}"
+                                     th:text="${error}">
                                 </div>
                             </div>
                             <div class="form-group">
