@@ -15,6 +15,7 @@ import com.cefothe.bgjudge.user.entities.User;
 import com.cefothe.common.component.AuthenticationFacade;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.MappingContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,24 +55,26 @@ public class ExamServiceBean implements ExamService {
 
     @Override
     public void create(CreateExamModel createExamModel) {
-        Converter<CreateExamModel, Examens> examConverter = context -> {
-            CreateExamModel createExamModel1 = context.getSource();
-            ExamSecurity examSecurity = new ExamSecurity(createExamModel1.getExamPassword(), Arrays.asList(createExamModel1.getAllowedIP()));
+        Converter<CreateExamModel, Examens> examConverter = new Converter<CreateExamModel, Examens>() {
 
+            @Override
+            public Examens convert(MappingContext<CreateExamModel, Examens> context) {
+                CreateExamModel createExamModel = context.getSource();
+                ExamSecurity examSecurity = new ExamSecurity(createExamModel.getExamPassword(), Arrays.asList(createExamModel.getAllowedIP()));
 
-            //TODO: Extract this logic in utility class
-            DateFormat formatter = new SimpleDateFormat(DATE_PATTERN);
-            Date date = null;
-            try {
-                date = formatter.parse(createExamModel1.getExamDate());
-            } catch (ParseException e) {
-                LOGGER.error("We can parse this date {}", createExamModel1.getExamDate());
+                DateFormat formatter = new SimpleDateFormat(DATE_PATTERN);
+                Date date = null;
+                try {
+                    date = formatter.parse(createExamModel.getExamDate());
+                } catch (ParseException e) {
+                    LOGGER.error("We can parse this date {}", createExamModel.getExamDate());
+                }
+                assert date != null;
+                java.sql.Timestamp examDate = new Timestamp(date.getTime());
+
+                return  new Examens(createExamModel.getName(),examDate, createExamModel.getExamLength(),authenticationFacade.getUser(), examSecurity);
+
             }
-            assert date != null;
-            Timestamp examDate = new Timestamp(date.getTime());
-
-            return  new Examens(createExamModel1.getName(),examDate, createExamModel1.getExamLength(),authenticationFacade.getUser(), examSecurity);
-
         };
         this.modelMapper.addConverter(examConverter);
         Examens examens = this.modelMapper.map(createExamModel,Examens.class);

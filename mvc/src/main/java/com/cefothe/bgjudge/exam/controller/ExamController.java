@@ -32,10 +32,13 @@ public class ExamController {
     }
 
     @GetMapping("create")
-    public String createExamPage(Model model, CreateExamModel createExamModel){
+    public String createExamPage(Model model){
         model.addAttribute("view", "exam/create");
         model.addAttribute("title", "Create exam");
-        model.addAttribute("createExamModel", createExamModel);
+
+        if (!model.containsAttribute("createExamModel")) {
+            model.addAttribute("createExamModel", new CreateExamModel());
+        }
 
         return "base-layout";
     }
@@ -45,7 +48,7 @@ public class ExamController {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("createExamModel", createExamModel);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createExamModel", bindingResult);
-            return "redirect:/create";
+            return "redirect:/exam/create";
         }
         examService.create(createExamModel);
         return "redirect:/exam/all";
