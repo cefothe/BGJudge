@@ -2,6 +2,7 @@ package com.cefothe.bgjudge.tasks.services;
 
 import com.cefothe.MvcApplication;
 import com.cefothe.bgjudge.exam.entities.ExamSecurity;
+import com.cefothe.bgjudge.exam.entities.ExamStatus;
 import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.models.binding.LoginIntoExamModel;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
@@ -73,7 +74,8 @@ public class ParticipantServiceBeanTest {
 
         this.examSecurity = new ExamSecurity("TestPassword", Collections.emptyList());
 
-        examens = new Examens("Java Exam", new Timestamp(new Date().getTime()),120, user, this.examSecurity);
+        examens = new Examens("Java Exam", new Timestamp(new Date().getTime()- 10_000),120, user, this.examSecurity);
+        examens.setExamStatus(ExamStatus.PUBLISHED);
         examens = examRepository.save(examens);
 
         when(authenticationFacade.getUser()).thenReturn(user);

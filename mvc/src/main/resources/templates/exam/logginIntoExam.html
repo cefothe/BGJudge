@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <main class="col-4 offset-4 text-center">
     <div class="container">
@@ -7,12 +7,16 @@
                 <div class="text-center"><h1 class="display-3">Login into exam </h1></div>
                 <br/>
                 <div class="well bs-component">
+                    <div class="alert alert-danger" th:if="${incorrectPassword!=null}" th:text="${incorrectPassword}"></div>
                     <form method="post" class="form-horizontal" th:object="${loginIntoExamModel}">
-                        <div class="form-group">
+                        <div class="form-group" th:classappend="${#fields.hasErrors('examPassword') ? 'has-danger' : _}"  >
                             <label for="key" class="col-lg-2 control-label">Password</label>
                             <div class="col-lg-10">
                             <input type="password" id="key"
                                    class="form-control" th:field="*{examPassword}" placeholder="Password"/>
+                            </div>
+                            <div class="alert alert-danger" th:each="error : ${#fields.errors('examPassword')}"
+                                 th:text="${error}">
                             </div>
                         </div>
 

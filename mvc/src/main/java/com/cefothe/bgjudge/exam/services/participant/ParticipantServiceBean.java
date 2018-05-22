@@ -32,13 +32,14 @@ public class ParticipantServiceBean implements ParticipantService {
 
     @Override
     public boolean addParticipantIntoExam(Long examId, LoginIntoExamModel loginIntoExamModel) {
-        LOG.info("User {} is added to exam {}", authenticationFacade.getUser(), examId);
+
+        LOG.info("User {} try to login into exam {}", authenticationFacade.getUser().getUsername(), examId );
 
         Examens exam = examRepository.findOne(examId);
         if(exam == null) {
             return false;
         }
-        if(!exam.checkIfExamAvailable() && !exam.getExamSecurity().checkForCorrectPassword(loginIntoExamModel.getExamPassword()) ){
+        if(!(exam.checkIfExamAvailable() && exam.getExamSecurity().checkForCorrectPassword(loginIntoExamModel.getExamPassword()))){
             return false;
         }else{
             Participant participant = participantRepository.findByExamens(exam);
@@ -47,6 +48,7 @@ public class ParticipantServiceBean implements ParticipantService {
             }
             participant.addParticipant(authenticationFacade.getUser());
             this.participantRepository.save(participant);
+            LOG.info("User {} is added to exam {}", authenticationFacade.getUser().getUsername(), examId);
             return true;
 
         }

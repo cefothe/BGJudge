@@ -2,7 +2,6 @@ package com.cefothe.bgjudge.tasks.controller;
 
 import com.cefothe.bgjudge.tasks.models.binding.CreateTaskModel;
 import com.cefothe.bgjudge.tasks.services.TaskService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -13,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 /**
  * Created by cefothe on 14.06.17.
@@ -30,7 +31,12 @@ public class TaskController {
     }
 
     @PostMapping("{id}/create")
-    public String createTask(@PathVariable("id") Long examId,CreateTaskModel createTaskModel, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String createTask(@PathVariable("id") Long examId, @Valid CreateTaskModel createTaskModel, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("createExamModel", createTaskModel);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.createExamModel", bindingResult);
+            return "redirect:/task/"+examId+"/create";
+        }
         taskService.createTask(createTaskModel,examId);
         return "redirect:/exam/open/"+ examId;
     }
