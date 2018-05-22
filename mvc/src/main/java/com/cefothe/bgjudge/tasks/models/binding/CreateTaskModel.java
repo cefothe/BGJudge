@@ -25,7 +25,7 @@ public class CreateTaskModel {
     @Getter
     @Setter
     @NotEmpty
-    @Length(min = 20)
+    @Length(min = 20, max = 800)
     public String description;
 
     @Getter
