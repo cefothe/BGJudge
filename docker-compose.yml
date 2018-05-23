@@ -1,0 +1,48 @@
+version: "2"
+services:
+  rabbitmq:
+    image: rabbitmq:3.6.6-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+  database:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: 021358
+    hostname: localhost
+    restart: always
+    ports:
+      - "3306:3306"
+  mvc:
+    build:
+      context: .
+    environment:
+      JAR_FILE: mvc.jar
+    volumes:
+      - ./docker/volumes/deployment:/app:ro
+    links:
+      - database:database
+      - rabbitmq:rabbitmq
+    depends_on:
+      - database
+      - rabbitmq
+    ports:
+      - "8080:8080"
+  worker:
+    build:
+        context: .
+    environment:
+        JAR_FILE: worker.jar
+    volumes:
+     - ./docker/volumes/deployment:/app:ro
+    links:
+     - database:database
+     - rabbitmq:rabbitmq
+    depends_on:
+     - database
+     - rabbitmq
+    ports:
+     - "8081:8081"
