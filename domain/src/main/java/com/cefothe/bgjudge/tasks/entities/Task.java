@@ -22,15 +22,17 @@ public class Task extends BaseEntity{
 
     @Getter
     @Setter
+    @Column(nullable = false)
     private String title;
 
     @Getter
     @Setter
     @Lob
+    @Column(nullable = false)
     private String description;
 
     @Getter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<TaskParam> taskPrams = new ArrayList<>(0);
 

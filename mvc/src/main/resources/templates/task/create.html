@@ -1,4 +1,4 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <main class="col-10 offset-4 text-center">
     <div class="container">
@@ -13,11 +13,17 @@
                                 <div class="col-lg-10">
                                     <input type="text" class="form-control" id="title" th:field="*{title}" placeholder="Task title">
                                 </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('title')}"
+                                     th:text="${error}">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="description" class="col-lg-2 control-label" >Description</label>
                                 <div class="col-lg-10">
                                     <textarea type="text" th:field="*{description}"  class="form-control" id="description"></textarea>
+                                </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('description')}"
+                                     th:text="${error}">
                                 </div>
                             </div>
                         </fieldset>
@@ -28,11 +34,17 @@
                                 <div class="col-lg-10">
                                     <textarea type="text" th:field="*{inputOne}"  class="form-control" id="inputOne"></textarea>
                                 </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('inputOne')}"
+                                     th:text="${error}">
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="outputOne" class="col-lg-2 control-label" >Output test case 1</label>
                                 <div class="col-lg-10">
                                     <textarea type="text" th:field="*{outputOne}"  class="form-control" id="outputOne"></textarea>
+                                </div>
+                                <div class="alert alert-danger" th:each="error : ${#fields.errors('outputOne')}"
+                                     th:text="${error}">
                                 </div>
                             </div>
                             <div class="form-group">

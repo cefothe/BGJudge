@@ -16,12 +16,12 @@
                     <li>
                         <a th:href="@{/}">Home</a>
                     </li>
-                    <li>
-                        <a th:href="@{/submissions}">Submissions</a>
-                    </li>
-                    <li>
-                        <a th:href="@{/feedback}">FeedBack</a>
-                    </li>
+                    <!--<li>-->
+                        <!--<a th:href="@{/submissions}">Submissions</a>-->
+                    <!--</li>-->
+                    <!--<li>-->
+                        <!--<a th:href="@{/feedback}">FeedBack</a>-->
+                    <!--</li>-->
                     <th:block sec:authorize="hasAuthority('TEACHER')">
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false">Teacher<span class="caret"></span></a>
@@ -31,16 +31,16 @@
                             </ul>
                         </li>
                     </th:block>
-                    <th:block sec:authorize="hasAuthority('ADMIN')">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false">Admin<span class="caret"></span></a>
-                            <ul class="dropdown-menu" aria-labelledby="download">
-                                <li><a th:href="@{/news/all}">Show all news</a></li>
-                                <li><a th:href="@{/news/create}">Create news</a></li>
-                                <li><a th:href="@{/user/all}">All users</a></li>
-                            </ul>
-                        </li>
-                    </th:block>
+                    <!--<th:block sec:authorize="hasAuthority('ADMIN')">-->
+                        <!--<li class="dropdown">-->
+                            <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download" aria-expanded="false">Admin<span class="caret"></span></a>-->
+                            <!--<ul class="dropdown-menu" aria-labelledby="download">-->
+                                <!--<li><a th:href="@{/news/all}">Show all news</a></li>-->
+                                <!--<li><a th:href="@{/news/create}">Create news</a></li>-->
+                                <!--<li><a th:href="@{/user/all}">All users</a></li>-->
+                            <!--</ul>-->
+                        <!--</li>-->
+                    <!--</th:block>-->
                 </ul>
 
                 <th:block sec:authorize="isAnonymous()">
