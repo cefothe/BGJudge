@@ -93,7 +93,7 @@ public class ExamServiceBean implements ExamService {
 
     @Override
     public void changeStatus(ExamStatus examStatus, Long examId) {
-        Examens examens = examRepository.findOne(examId);
+        Examens examens = examRepository.findById(examId).get();
         examens.setExamStatus(examStatus);
         examRepository.save(examens);
     }
@@ -107,13 +107,13 @@ public class ExamServiceBean implements ExamService {
 
     @Override
     public ViewExamDetailsModel get(Long id) {
-        Examens examens = this.examRepository.findOne(id);
+        Examens examens = this.examRepository.findById(id).get();
         return this.modelMapper.map(examens, ViewExamDetailsModel.class);
     }
 
     @Override
     public ViewExamTasksModel getExamTasks(Long id) {
-        Examens examens = this.examRepository.findOne(id);
+        Examens examens = this.examRepository.findById(id).get();
         ArrayList<ViewTaskModel> taskModels = new ArrayList<>();
         User user = this.authenticationFacade.getUser();
         examens.getTasks().forEach(task -> {

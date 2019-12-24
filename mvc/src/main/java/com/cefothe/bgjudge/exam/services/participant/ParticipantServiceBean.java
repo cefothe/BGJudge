@@ -1,5 +1,7 @@
 package com.cefothe.bgjudge.exam.services.participant;
 
+import java.util.Optional;
+
 import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.models.binding.LoginIntoExamModel;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
@@ -35,10 +37,11 @@ public class ParticipantServiceBean implements ParticipantService {
 
         LOG.info("User {} try to login into exam {}", authenticationFacade.getUser().getUsername(), examId );
 
-        Examens exam = examRepository.findOne(examId);
-        if(exam == null) {
+        Optional<Examens> examOptional = examRepository.findById(examId);
+        if(!examOptional.isPresent()) {
             return false;
         }
+		Examens exam = examOptional.get();
         if(!(exam.checkIfExamAvailable() && exam.getExamSecurity().checkForCorrectPassword(loginIntoExamModel.getExamPassword()))){
             return false;
         }else{
@@ -57,8 +60,7 @@ public class ParticipantServiceBean implements ParticipantService {
     @Override
     public boolean checkParticipantAndExam(Long examId) {
         LOG.info("Check if exam {} is open", examId);
-
-        Examens examens = this.examRepository.findOne(examId);
+        Examens examens = this.examRepository.findById(examId).get();
         Participant participant = this.participantRepository.findByExamens(examens);
         return participant != null && participant.getParticipants().contains(this.authenticationFacade.getUser()) && examens.checkIfExamAvailable();
     }
