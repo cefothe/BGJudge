@@ -49,7 +49,7 @@ import java.util.concurrent.Future;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
+import static org.springframework.boot.jdbc.EmbeddedDatabaseConnection.H2;
 
 /**
  * Created by cefothe on 31.05.17.
@@ -119,7 +119,7 @@ public class StrategyBeanTest {
     @Test
     public void strategyTest() throws IOException, InterruptedException {
 
-        User user = createUser(roleRepository.findOne(1L),true);
+        User user = createUser(roleRepository.findById(1L).get(),true);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
@@ -136,7 +136,7 @@ public class StrategyBeanTest {
         Future<Submission> submissionFuture = strategy.execute(submission.getId());
         wait(submissionFuture);
 
-        Submission expected = submissionRepository.findOne(submission.getId());
+        Submission expected = submissionRepository.findById(submission.getId()).get();
 
         assertThat(expected.getResult(), Matchers.equalTo(100));
         assertThat(expected.getTests(), notNullValue());
@@ -147,7 +147,7 @@ public class StrategyBeanTest {
     @Test
     public void strategyTestWith50Result() throws IOException, InterruptedException {
 
-        User user = createUser(roleRepository.findOne(1L),true);
+        User user = createUser(roleRepository.findById(1L).get(),true);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
@@ -166,7 +166,7 @@ public class StrategyBeanTest {
         Future<Submission> submissionFuture = strategy.execute(submission.getId());
         wait(submissionFuture);
 
-        Submission expected = submissionRepository.findOne(submission.getId());
+        Submission expected = submissionRepository.findById(submission.getId()).get();
 
         assertThat(expected.getResult(), Matchers.equalTo(50));
         assertThat(expected.getTests(), notNullValue());

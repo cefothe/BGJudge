@@ -4,7 +4,8 @@ import com.cefothe.bgjudge.workers.compilers.Compiler;
 import com.cefothe.bgjudge.workers.compilers.JavaCompiler;
 import com.cefothe.bgjudge.workers.executors.Executor;
 import com.cefothe.bgjudge.workers.executors.JavaExecutor;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -16,7 +17,7 @@ public enum ProgramLanguages {
 
     JAVA(JavaCompiler.class, JavaExecutor.class, ".java");
 
-    private static final Logger LOG = Logger.getLogger(ProgramLanguages.class);
+    private static final Logger LOG = LogManager.getLogger(ProgramLanguages.class);
 
     Class<? extends Compiler> compiler;
     Class<? extends Executor> executor;

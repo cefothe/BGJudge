@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
+import static org.springframework.boot.jdbc.EmbeddedDatabaseConnection.H2;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = MvcApplication.class)

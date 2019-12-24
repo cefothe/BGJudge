@@ -53,7 +53,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
+import static org.springframework.boot.jdbc.EmbeddedDatabaseConnection.H2;
 
 /**
  * Created by cefothe on 11.06.17.
@@ -103,7 +103,7 @@ public class WorkerRouteTest {
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    private void saveRepository(CrudRepository repository, BaseEntity baseEntity) {
+	void saveRepository(CrudRepository repository, BaseEntity baseEntity) {
         repository.save(baseEntity);
     }
 
@@ -118,7 +118,7 @@ public class WorkerRouteTest {
 
         NotifyBuilder notify = new NotifyBuilder(camelContext).whenDone(1).create();
 
-        User user = createUser(roleRepository.findOne(1L),true);
+        User user = createUser(roleRepository.findById(1L).get(),true);
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
         Task task = new Task("Test", "test");
@@ -140,7 +140,7 @@ public class WorkerRouteTest {
         boolean matches = notify.matches(30, TimeUnit.SECONDS);
         // true means the notifier condition matched (= 1 message is done)
         assertThat(matches, Matchers.is(true));
-        Submission expected = submissionRepository.findOne(submission.getId());
+        Submission expected = submissionRepository.findById(submission.getId()).get();
         assertThat(expected.getStatus(), Matchers.is(SubmissionStatus.COMPLETED));
     }
 

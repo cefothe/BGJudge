@@ -32,7 +32,7 @@ import java.util.Collections;
 import java.util.Date;
 
 import static org.mockito.Mockito.when;
-import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
+import static org.springframework.boot.jdbc.EmbeddedDatabaseConnection.H2;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = MvcApplication.class)

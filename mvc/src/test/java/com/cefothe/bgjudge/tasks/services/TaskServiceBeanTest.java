@@ -30,7 +30,8 @@ import java.util.Date;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
+import static org.springframework.boot.jdbc.EmbeddedDatabaseConnection.H2;
+
 /**
  * Created by Stefan Angelov - Delta Source Bulgaria on 6/16/17.
  */
@@ -79,7 +80,7 @@ public class TaskServiceBeanTest {
         taskService.createTask(createTaskModel, examens.getId());
 
         // Verify
-        Task task = taskRepositories.findOne(1L);
+        Task task = taskRepositories.findById(1L).get();
         assertThat(task.getTaskPrams(), hasSize(2));
         assertThat(task.getTaskPrams(), hasItem(new TaskParam("Stefan", "Hello, Stefan")));
         assertThat(task.getTaskPrams(), hasItem(new TaskParam("Ivan", "Hello, Ivan")));
