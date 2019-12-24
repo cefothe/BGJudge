@@ -1,5 +1,13 @@
 package com.cefothe.bgjudge.submissions.repositories;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 import com.cefothe.bgjudge.exam.entities.ExamSecurity;
 import com.cefothe.bgjudge.exam.entities.Examens;
 import com.cefothe.bgjudge.exam.repositories.ExamRepository;
@@ -16,6 +24,7 @@ import com.cefothe.common.entities.BaseEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -24,18 +33,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
+import static org.springframework.boot.jdbc.EmbeddedDatabaseConnection.H2;
 
 /**
  * Created by Stefan Angelov - Delta Source Bulgaria on 6/6/17.
@@ -72,7 +73,7 @@ public class SubmissionRepositoryTest {
 
     @Test
     public void test_with_two_submission_and_one_exam_one_user() throws IOException {
-        User user = createUser(roleRepository.findOne(1L),false);
+        User user = createUser(roleRepository.findByAuthority("student"),false);
         saveRepository(userRepository,user);
 
         ExamSecurity examSecurity = new ExamSecurity("TestPassword", Collections.emptyList());
@@ -96,7 +97,7 @@ public class SubmissionRepositoryTest {
 
     @Test
     public void test_find_all_submission_and_one_exam_one_user() throws IOException {
-        User user = createUser(roleRepository.findOne(1L),false);
+        User user = createUser(roleRepository.findByAuthority("student"),false);
         saveRepository(userRepository,user);
 
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity);
@@ -118,7 +119,7 @@ public class SubmissionRepositoryTest {
 
     @Test
     public void test_find_all_submission_by_exam_and_users() throws IOException {
-        User user = createUser(roleRepository.findOne(1L),false);
+        User user = createUser(roleRepository.findByAuthority("student"),false);
         saveRepository(userRepository,user);
 
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
@@ -128,12 +129,12 @@ public class SubmissionRepositoryTest {
         saveRepository(taskRepositories,task);
 
         //First submission
-        User firstUser = createUser("Stefan", roleRepository.findOne(1L), "stefan@gmail.com");
+        User firstUser = createUser("Stefan", roleRepository.findByAuthority("student"), "stefan@gmail.com");
         saveRepository(userRepository,firstUser);
         Submission firstSubmission = createSubmission(firstUser, exam, task, 100, submissionRepository);
 
         //Second submission
-        User secondUser = createUser("Ivan", roleRepository.findOne(1L), "ivan@gmail.com");
+        User secondUser = createUser("Ivan", roleRepository.findByAuthority("student"), "ivan@gmail.com");
         saveRepository(userRepository,secondUser);
         Submission secondSubmission = createSubmission(secondUser, exam, task, 50, submissionRepository);
 
@@ -152,7 +153,7 @@ public class SubmissionRepositoryTest {
 
     @Test
     public void test_with_two_submission_and_one_exam_two_user() throws IOException {
-        User user = createUser(roleRepository.findOne(1L),false);
+        User user = createUser(roleRepository.findByAuthority("student"),false);
         saveRepository(userRepository,user);
 
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
@@ -162,12 +163,12 @@ public class SubmissionRepositoryTest {
         saveRepository(taskRepositories,task);
 
         //First submission
-        User firstUser = createUser("Stefan", roleRepository.findOne(1L), "stefan@gmail.com");
+        User firstUser = createUser("Stefan", roleRepository.findByAuthority("student"), "stefan@gmail.com");
         saveRepository(userRepository,firstUser);
         createSubmission(firstUser, exam, task, 100, submissionRepository);
 
         //Second submission
-        User secondUser = createUser("Ivan", roleRepository.findOne(1L) , "ivan@gmail.com");
+        User secondUser = createUser("Ivan", roleRepository.findByAuthority("student") , "ivan@gmail.com");
         saveRepository(userRepository,secondUser);
         createSubmission(secondUser, exam, task, 50, submissionRepository);
 
@@ -179,7 +180,7 @@ public class SubmissionRepositoryTest {
     @Test
     public void test_with_two_submission_and_one_exam_one_user_and_two_tasks() throws IOException {
 
-        User user = createUser(roleRepository.findOne(1L),false);
+        User user = createUser(roleRepository.findByAuthority("student"),false);
         saveRepository(userRepository,user);
 
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
@@ -205,7 +206,7 @@ public class SubmissionRepositoryTest {
 
     @Test
     public void test_with_three_submission_one_exam_one_user_and_two_tasks() throws IOException {
-        User user = createUser(roleRepository.findOne(1L),false);
+        User user = createUser(roleRepository.findByAuthority("student"),false);
         saveRepository(userRepository,user);
 
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, examSecurity );
@@ -226,7 +227,7 @@ public class SubmissionRepositoryTest {
         //Third submission
         createSubmission(user, exam, taskSecond, 50, submissionRepository);
 
-        User secondUser = createUser("Ivan", roleRepository.findOne(1L), "ivan@gmail.com");
+        User secondUser = createUser("Ivan", roleRepository.findByAuthority("student"), "ivan@gmail.com");
         saveRepository(userRepository,secondUser);
         //Third submission
         createSubmission(secondUser, exam, taskSecond, 50, submissionRepository);
