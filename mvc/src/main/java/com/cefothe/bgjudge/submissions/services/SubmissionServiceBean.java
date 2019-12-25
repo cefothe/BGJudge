@@ -51,8 +51,8 @@ public class SubmissionServiceBean implements SubmissionService{
     @Override
     public void create(SubmissionTO submissionTO) throws IOException {
         if(participantService.checkParticipantAndExam(submissionTO.getExamId())) {
-            Task task = taskRepositories.findOne(submissionTO.getTaskId());
-            Examens examens = examRepository.findOne(submissionTO.getExamId());
+            Task task = taskRepositories.findById(submissionTO.getTaskId()).get();
+            Examens examens = examRepository.findById(submissionTO.getExamId()).get();
             Submission submission = submissionRepository.save(new Submission(this.authenticationFacade.getUser(),task,examens, submissionTO.getCode(), SubmissionStatus.CREATED));
             sendToWorker.sendMessage(submission);
         }
@@ -60,8 +60,8 @@ public class SubmissionServiceBean implements SubmissionService{
 
     @Override
     public Page<SubmissionResultTO> findSubmissionByExamAndTask(Long examId, Long taskId, Pageable pageable) {
-        Task task = taskRepositories.findOne(taskId);
-        Examens examens = examRepository.findOne(examId);
+        Task task = taskRepositories.findById(taskId).get();
+        Examens examens = examRepository.findById(examId).get();
         Page<Submission> submissions = this.submissionRepository.findSubmissionByUserTaskExam(examens, task,this.authenticationFacade.getUser(), pageable);
         return submissions.map(source -> new SubmissionResultTO(source.getStatus(), source.getId(), source.getResult()));
     }

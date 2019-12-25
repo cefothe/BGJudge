@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,7 +31,8 @@ import java.util.Date;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnection.H2;
+import static org.springframework.boot.jdbc.EmbeddedDatabaseConnection.H2;
+
 /**
  * Created by Stefan Angelov - Delta Source Bulgaria on 6/16/17.
  */
@@ -38,6 +40,7 @@ import static org.springframework.boot.autoconfigure.jdbc.EmbeddedDatabaseConnec
 @ContextConfiguration(classes = MvcApplication.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 @AutoConfigureTestDatabase(connection = H2)
+@ActiveProfiles("unittest")
 @DirtiesContext
 public class TaskServiceBeanTest {
 
@@ -79,7 +82,7 @@ public class TaskServiceBeanTest {
         taskService.createTask(createTaskModel, examens.getId());
 
         // Verify
-        Task task = taskRepositories.findOne(1L);
+        Task task = taskRepositories.findById(1L).get();
         assertThat(task.getTaskPrams(), hasSize(2));
         assertThat(task.getTaskPrams(), hasItem(new TaskParam("Stefan", "Hello, Stefan")));
         assertThat(task.getTaskPrams(), hasItem(new TaskParam("Ivan", "Hello, Ivan")));

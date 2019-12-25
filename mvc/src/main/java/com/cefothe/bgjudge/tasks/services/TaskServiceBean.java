@@ -50,7 +50,7 @@ public class TaskServiceBean implements TaskService {
         this.modelMapper.addConverter(taskConverter);
         Task task = this.modelMapper.map(createTaskModel,Task.class);
         taskRepositories.save(task);
-        Examens exam = examRepository.findOne(examId);
+        Examens exam = examRepository.findById(examId).get();
         exam.addTask(task);
         examRepository.save(exam);
     }

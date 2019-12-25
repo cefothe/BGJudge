@@ -58,7 +58,7 @@ public class StrategyBean implements Strategy {
     @Override
     @Async
     public Future<Submission> execute(Long submissionId) throws IOException {
-        Submission submission = submissionRepository.findOne(submissionId);
+        Submission submission = submissionRepository.findById(submissionId).get();
         ProgramLanguages programLanguages = ProgramLanguages.JAVA;
         changeSubmissionStatus(SubmissionStatus.IN_PROGRESS, submission);
         LOGGER.info("Start executing submission with id {}", submissionId);
