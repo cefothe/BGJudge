@@ -1,5 +1,15 @@
 package com.cefothe.bgjudge.workers;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Date;
+import java.util.concurrent.Future;
+
 import com.cefothe.bgjudge.WorkerApplication;
 import com.cefothe.bgjudge.exam.entities.ExamSecurity;
 import com.cefothe.bgjudge.exam.entities.Examens;
@@ -23,6 +33,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,18 +48,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.concurrent.Future;
-
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.boot.jdbc.EmbeddedDatabaseConnection.H2;
 
 /**
@@ -85,6 +88,8 @@ public class StrategyBeanTest {
     @Autowired
     public Strategy strategy;
 
+   	public  User user;
+
     @Configuration
     @Profile("non-async")
     public static class Config{
@@ -102,7 +107,6 @@ public class StrategyBeanTest {
         submissionRepository.deleteAll();
         examRepository.deleteAll();
         userRepository.deleteAll();
-
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -119,7 +123,8 @@ public class StrategyBeanTest {
     @Test
     public void strategyTest() throws IOException, InterruptedException {
 
-        User user = createUser(roleRepository.findById(1L).get(),true);
+     	User user = new User("test1", "test", new UserInformation("Stefan", "Angelov", "cefothe1@gmail.com"), roleRepository.findById(1L).get());
+		userRepository.save(user);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
@@ -147,7 +152,8 @@ public class StrategyBeanTest {
     @Test
     public void strategyTestWith50Result() throws IOException, InterruptedException {
 
-        User user = createUser(roleRepository.findById(1L).get(),true);
+		User user = new User("test2", "test", new UserInformation("Stefan", "Angelov", "cefothe2@gmail.com"), roleRepository.findById(1L).get());
+		userRepository.save(user);
 
         File file = new File(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getFile());
         Examens exam = new Examens("Test", new Timestamp(new Date().getTime()), 120, user, new ExamSecurity("Test", Collections.emptyList()));
@@ -174,13 +180,6 @@ public class StrategyBeanTest {
         assertThat(expected.getTests().get(0).getCompilerError(), isEmptyOrNullString());
     }
 
-    public User createUser(Role role, boolean persisted) {
-        User user = new User("test", "test", new UserInformation("Stefan", "Angelov", "cefothe@gmail.com"), role);
-        if (persisted) {
-            saveRepository(userRepository, user);
-        }
-        return user;
-    }
 
     public Submission createSubmision(User user, Examens exam, Task task, boolean needToBePersist) throws IOException {
         String code = new String(Files.readAllBytes(Paths.get(StrategyBeanTest.class.getResource("/compiler/CorrectExecutorTest.java").getPath())));
