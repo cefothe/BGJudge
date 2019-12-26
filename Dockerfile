@@ -1,4 +1,4 @@
-FROM java:8-jdk
+FROM openjdk:11-jdk
 MAINTAINER Stefan Angelov <cefothe@gmail.com>
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
